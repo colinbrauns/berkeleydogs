@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berkeley Dogs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <meta name="description" content="Advocating for accessible, inclusive dog parks and infrastructure in Berkeley, CA." />
+</head>
+<body>
+  <header>
+    <h1>Berkeley Dogs</h1>
+    <p>Inclusive Spaces for All Dogs & Their Humans</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#join">Join Us</a>
+      <a href="#contact">Contact Council</a>
+      <a href="#calendar">Events</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>Why Inclusive Dog Spaces Matter</h2>
+      <p>
+        We advocate for safe, accessible dog parks in Berkeley that support pet owners and service dog handlers alike. From ADA-compliant spaces to service-dog-only hours, we envision a city where all dogs can thrive and be part of a more walkable, inclusive community.
+      </p>
+      <ul>
+        <li>Support mental and physical health</li>
+        <li>Encourage responsible dog ownership</li>
+        <li>Build community through inclusive spaces</li>
+        <li>Boost Berkeley’s national reputation as a dog-friendly city</li>
+      </ul>
+    </section>
+
+    <section id="join">
+      <h2>Join Our Group</h2>
+      <p>Become part of our movement to create better dog infrastructure in Berkeley.</p>
+      <form id="join-form">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <button type="submit">Join the Movement</button>
+      </form>
+    </section>
+
+    <section id="contact">
+      <h2>Email Your City Council Member</h2>
+      <p>Let your voice be heard. Tell your local officials that you support inclusive dog spaces!</p>
+      <button onclick="generateEmail()">Generate Email to Council</button>
+    </section>
+
+    <section id="calendar">
+      <h2>Upcoming Events</h2>
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=America%2FLos_Angeles"
+        style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"
+      ></iframe>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Berkeley Dogs | <a href="mailto:info@berkeleydogs.com">info@berkeleydogs.com</a></p>
+  </footer>
+
+  <script>
+    function generateEmail() {
+      const subject = encodeURIComponent("Support Inclusive Dog Parks in Berkeley");
+      const body = encodeURIComponent(`Dear Council Member,
+
+I am writing to express my strong support for the development of inclusive, accessible dog exercise facilities in Berkeley. These spaces will benefit all residents—from service dog handlers to pet owners—and enhance the health, safety, and walkability of our city.
+
+Thank you for your leadership.
+
+Sincerely,
+[Your Name]`);
+      window.location.href = `mailto:council@berkeleyca.gov?subject=${subject}&body=${body}`;
+    }
+
+    document.getElementById('join-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Thanks for joining Berkeley Dogs! We’ll be in touch.');
+    });
+  </script>
+</body>
+</html>
