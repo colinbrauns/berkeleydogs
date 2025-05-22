@@ -1,19 +1,37 @@
+document.querySelectorAll('nav ul li a').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+      e.preventDefault();
 
-// Fade-in on scroll
-const faders = document.querySelectorAll('.section');
-const options = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+      });
 
-const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add('fade-in');
-    observer.unobserve(entry.target);
+      // Optional: Highlight active nav link (more complex, but a basic idea)
+      document.querySelectorAll('nav ul li a').forEach(link => {
+          link.classList.remove('active');
+      });
+      this.classList.add('active');
   });
-}, options);
+});
 
-faders.forEach(section => {
-  appearOnScroll.observe(section);
+// Optional: Add a simple scroll-based active link highlight
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav ul li a');
+
+  let current = '';
+  sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= sectionTop - sectionHeight / 3) { // Adjust as needed
+          current = section.getAttribute('id');
+      }
+  });
+
+  navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').includes(current)) {
+          link.classList.add('active');
+      }
+  });
 });
