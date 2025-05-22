@@ -18,13 +18,13 @@
 
         /* Base Styles & Reset */
         :root {
-            --primary-blue: #3498db;
-            --primary-blue-dark: #2980b9;
-            --accent-green: #2ecc71;
-            --accent-green-dark: #27ae60;
-            --secondary-orange: #f39c12;
-            --secondary-orange-dark: #e67e22;
-            --dark-grey: #2c3e50;
+            --primary-blue: #002676; /* Berkeley Blue */
+            --primary-blue-dark: #001a4d; /* Darker Berkeley Blue */
+            --accent-green: #2ecc71; /* Keep for strong CTA */
+            --accent-green-dark: #27ae60; /* Keep for strong CTA */
+            --secondary-gold: #FDB515; /* California Gold (was secondary-orange) */
+            --secondary-gold-dark: #e6a300; /* Darker California Gold (was secondary-orange-dark) */
+            --dark-grey: #2c3e50; /* Retained for header/footer and strong contrast */
             --light-grey: #ecf0f1;
             --white: #ffffff;
             --text-color: #333333;
@@ -131,13 +131,13 @@
         }
 
         .button.secondary {
-            background: var(--secondary-orange);
+            background: var(--secondary-gold); /* Updated to gold */
             font-size: 0.95em;
             padding: 10px 22px;
         }
 
         .button.secondary:hover {
-            background: var(--secondary-orange-dark);
+            background: var(--secondary-gold-dark); /* Updated to darker gold */
         }
 
         /* Header & Navigation */
@@ -195,7 +195,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://placehold.co/1500x800/2c3e50/ecf0f1?text=Happy+Dogs+in+Park') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://placehold.co/1500x800/002676/FDB515?text=Berkeley+Dog+Park+Advocates') no-repeat center center/cover; /* Updated image background color */
             color: var(--white);
             text-align: center;
             padding: 120px 0;
@@ -413,7 +413,7 @@
 
         .download-item i {
             font-size: 3.5em;
-            color: var(--secondary-orange);
+            color: var(--secondary-gold); /* Updated to gold */
             margin-bottom: 15px;
         }
 
@@ -424,12 +424,12 @@
 
         .download-item .button {
             margin-top: auto;
-            background-color: var(--secondary-orange);
+            background-color: var(--secondary-gold); /* Updated to gold */
             align-self: center;
         }
 
         .download-item .button:hover {
-            background-color: var(--secondary-orange-dark);
+            background-color: var(--secondary-gold-dark); /* Updated to darker gold */
         }
 
         /* Upcoming Events / Calendar Section */
@@ -653,13 +653,13 @@
                 <h4>Potential Site 1: North Berkeley Park Extension</h4>
                 <p><strong>Neighborhood:</strong> North Berkeley</p>
                 <p><strong>Description:</strong> A currently underutilized open space adjacent to an existing park, with good sun exposure and potential for easy fencing. Close to residential areas and public transport, offering a much-needed green space in an urbanized area.</p>
-                <img src="https://placehold.co/400x250/d3d3d3/666666?text=North+Berkeley+Park+Site" alt="Proposed Site 1 Map">
+                <img src="https://placehold.co/400x250/002676/FDB515?text=North+Berkeley+Site" alt="Proposed Site 1 Map">
             </div>
             <div class="location-item">
                 <h4>Potential Site 2: Southside Community Green</h4>
                 <p><strong>Neighborhood:</strong> South Berkeley</p>
                 <p><strong>Description:</strong> A flat, grassy area within an existing larger park that could be easily sectioned off without disturbing other recreational activities. Offers existing water access and good visibility for safety, serving a dense residential area.</p>
-                <img src="https://placehold.co/400x250/d3d3d3/666666?text=Southside+Green+Site" alt="Proposed Site 2 Map">
+                <img src="https://placehold.co/400x250/002676/FDB515?text=Southside+Site" alt="Proposed Site 2 Map">
             </div>
             <p style="text-align: center;">We welcome community input on these and other potential sites. Please attend our community meetings or contact us with your suggestions!</p>
         </div>
