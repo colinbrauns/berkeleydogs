@@ -6,7 +6,551 @@
     <title>Berkeley Dog Park Advocates - Unleash Joy!</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /*
+         * CSS Styling for Berkeley Dog Park Advocates Website
+         *
+         * This section defines the visual appearance of the website,
+         * including colors, typography, layout, and responsiveness.
+         * It aims for a clean, modern, and inviting aesthetic.
+         */
+
+        /* Base Styles & Reset */
+        :root {
+            --primary-blue: #3498db;
+            --primary-blue-dark: #2980b9;
+            --accent-green: #2ecc71;
+            --accent-green-dark: #27ae60;
+            --secondary-orange: #f39c12;
+            --secondary-orange-dark: #e67e22;
+            --dark-grey: #2c3e50;
+            --light-grey: #ecf0f1;
+            --white: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--light-grey);
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0; /* Consistent vertical padding for sections */
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark-grey);
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center; /* Default all headings to center */
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 2.4em;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.9em;
+            margin-bottom: 25px;
+        }
+
+        h4 {
+            font-size: 1.4em;
+            color: var(--primary-blue);
+            text-align: left; /* Override for specific items */
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-blue-dark);
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .button {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Ensure button text is centered */
+        }
+
+        .button:hover {
+            background: var(--primary-blue-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .button.primary {
+            background: var(--accent-green);
+        }
+
+        .button.primary:hover {
+            background: var(--accent-green-dark);
+        }
+
+        .button.secondary {
+            background: var(--secondary-orange);
+            font-size: 0.95em;
+            padding: 10px 22px;
+        }
+
+        .button.secondary:hover {
+            background: var(--secondary-orange-dark);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--dark-grey);
+            color: var(--white);
+            padding: 15px 0;
+            border-bottom: 4px solid var(--primary-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.6em;
+            text-align: left; /* Override default for header title */
+            flex-shrink: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        header nav ul li {
+            margin-left: 25px;
+        }
+
+        header nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://placehold.co/1500x800/2c3e50/ecf0f1?text=Happy+Dogs+in+Park') no-repeat center center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 120px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 550px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 3.5em;
+            margin-bottom: 25px;
+            color: var(--white);
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            color: var(--light-grey);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Section Styling */
+        .section-padded {
+            background-color: var(--white);
+        }
+
+        .section-alt {
+            background-color: var(--light-grey);
+        }
+
+        /* Grid Layouts */
+        .grid-2-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .grid-3-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        /* Card-like Elements */
+        .card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left; /* Default text alignment for cards */
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card h4 {
+            margin-bottom: 10px;
+        }
+
+        /* Specific Section Elements */
+        .argument-item {
+            /* Inherits from .card */
+        }
+
+        .location-item {
+            background-color: var(--white);
+            border-left: 6px solid var(--accent-green);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .help-item {
+            /* Inherits from .card */
+            text-align: center;
+        }
+
+        .help-item i {
+            font-size: 4em;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .help-item h4 {
+            color: var(--dark-grey);
+            text-align: center; /* Override default card h4 alignment */
+        }
+
+        .help-item .button {
+            margin-top: auto;
+            align-self: center; /* Center button in flex column */
+        }
+
+        .news-item {
+            /* Inherits from .card */
+            margin-bottom: 25px; /* Add margin for separation in news list */
+        }
+
+        .news-item h4 {
+            color: var(--dark-grey);
+        }
+
+        .news-date {
+            font-size: 0.85em;
+            color: #777;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .read-more {
+            color: var(--primary-blue);
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Contact City Council Section */
+        .council-contact-form {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .council-contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-grey);
+        }
+
+        .council-contact-form input[type="text"],
+        .council-contact-form input[type="email"],
+        .council-contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .council-contact-form input[type="text"]:focus,
+        .council-contact-form input[type="email"]:focus,
+        .council-contact-form textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        .council-contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .council-contact-form .button {
+            width: auto;
+            margin-top: 10px;
+        }
+
+        #generatedEmailLink {
+            display: block;
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid var(--accent-green);
+            border-radius: var(--border-radius);
+            font-size: 1.1em;
+            text-align: center;
+            word-break: break-all;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        #generatedEmailLink a {
+            color: var(--accent-green-dark);
+            font-weight: 600;
+        }
+
+        /* Download Materials Section */
+        .download-item {
+            /* Inherits from .card */
+            text-align: center;
+        }
+
+        .download-item i {
+            font-size: 3.5em;
+            color: var(--secondary-orange);
+            margin-bottom: 15px;
+        }
+
+        .download-item h4 {
+            color: var(--dark-grey);
+            text-align: center; /* Override default card h4 alignment */
+        }
+
+        .download-item .button {
+            margin-top: auto;
+            background-color: var(--secondary-orange);
+            align-self: center;
+        }
+
+        .download-item .button:hover {
+            background-color: var(--secondary-orange-dark);
+        }
+
+        /* Upcoming Events / Calendar Section */
+        .calendar-link-container {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        .calendar-link-container p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* Contact Us & Follow Section */
+        .social-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-links a {
+            color: var(--primary-blue);
+            font-size: 2.8em;
+            margin: 0 18px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-blue-dark);
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-grey);
+            color: var(--light-grey);
+            text-align: center;
+            padding: 25px 0;
+            font-size: 0.9em;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            header h1 {
+                margin-bottom: 15px;
+            }
+            header nav ul {
+                justify-content: center;
+                margin-top: 10px;
+            }
+            header nav ul li {
+                margin: 0 12px;
+            }
+            .hero h2 {
+                font-size: 2.8em;
+            }
+            .hero p {
+                font-size: 1.1em;
+            }
+            .grid-2-cols,
+            .grid-3-cols {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+            .container {
+                padding: 30px 0;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            h3 {
+                font-size: 1.6em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0;
+                min-height: 450px;
+            }
+            .hero h2 {
+                font-size: 2.2em;
+            }
+            .hero p {
+                font-size: 1em;
+            }
+            .button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            header nav ul li {
+                margin: 0 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.4em;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            h3 {
+                font-size: 1.4em;
+            }
+            .hero h2 {
+                font-size: 1.8em;
+            }
+            .hero p {
+                font-size: 0.9em;
+            }
+            header nav ul li {
+                margin: 0 5px;
+            }
+            .council-contact-form {
+                padding: 25px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -242,6 +786,130 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        /*
+         * JavaScript for Website Interactivity
+         *
+         * This section handles smooth scrolling for navigation links
+         * and the generation of the "Contact City Council" email.
+         */
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent default anchor jump
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Calculate offset to account for sticky header
+                    const headerOffset = document.querySelector('header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth' // Smooth scroll effect
+                    });
+
+                    // Update active class for navigation links
+                    document.querySelectorAll('nav ul li a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active navigation link based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]'); // Select all sections with an ID
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const headerHeight = document.querySelector('header').offsetHeight; // Get height of sticky header
+            let currentActiveSection = '';
+
+            // Determine which section is currently in view
+            sections.forEach(section => {
+                // Adjust sectionTop by headerHeight to correctly detect when section is "active"
+                const sectionTop = section.offsetTop - headerHeight - 1; // -1 for slight buffer
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (pageYOffset >= sectionTop && pageYOffset < sectionBottom) {
+                    currentActiveSection = section.getAttribute('id');
+                }
+            });
+
+            // Apply 'active' class to the corresponding navigation link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(currentActiveSection)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Function to generate email to City Council
+        function generateCouncilEmail() {
+            const userName = document.getElementById('userName').value;
+            const userEmail = document.getElementById('userEmail').value;
+            const userMessage = document.getElementById('userMessage').value;
+            const emailLinkDiv = document.getElementById('generatedEmailLink');
+            const emailLink = document.getElementById('emailLink');
+
+            // Basic validation
+            if (!userName || !userEmail) {
+                // Using a simple message box for user feedback
+                const messageBox = document.createElement('div');
+                messageBox.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+                    padding: 20px; border-radius: 8px; z-index: 9999;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.2); text-align: center;
+                    max-width: 90%; /* Responsive width */
+                `;
+                messageBox.innerHTML = `
+                    <p>Please enter your Name and Email to generate the message.</p>
+                    <button onclick="this.parentNode.remove()" style="margin-top: 15px; padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">OK</button>
+                `;
+                document.body.appendChild(messageBox);
+                return;
+            }
+
+            // City Council email addresses (from previous search results)
+            const councilEmails = [
+                'council@berkeleyca.gov', // General council email
+                'mayor@berkeleyca.gov', // Mayor's email
+                'rkesarwani@berkeleyca.gov', // District 1
+                'ttaplin@berkeleyca.gov',    // District 2
+                'bbartlett@berkeleyca.gov',  // District 3
+                'itregub@berkeleyca.gov',    // District 4
+                'sokeefe@berkeleyca.gov',    // District 5
+                'bblackaby@berkeleyca.gov',  // District 6
+                'clunaparra@berkeleyca.gov', // District 7
+                'mhumbert@berkeleyca.gov'    // District 8
+            ];
+
+            const subject = encodeURIComponent("Support for More Dog Parks in Berkeley");
+            let body = `Dear Berkeley City Council Members,\n\n`;
+            body += `I am writing to express my strong support for the creation of additional designated dog parks in Berkeley. As a resident and a member of the community, I believe that more dog parks will bring significant benefits to our city.\n\n`;
+            body += `Dog parks promote responsible pet ownership by providing safe, legal spaces for off-leash exercise, which is crucial for canine health and socialization. They also foster community connections among residents and contribute to a safer, more harmonious urban environment by reducing unauthorized off-leash activity in other public spaces.\n\n`;
+            body += `I urge you to prioritize the allocation of resources and identify suitable locations for new dog parks across Berkeley.\n\n`;
+
+            if (userMessage.trim() !== '') {
+                body += `\nMy personal thoughts on this matter are:\n"${userMessage.trim()}"\n\n`;
+            }
+
+            body += `Thank you for your time and consideration of this important community need.\n\n`;
+            body += `Sincerely,\n${userName}\n${userEmail}\nBerkeley Resident`;
+
+            const mailtoLink = `mailto:${councilEmails.join(',')}` +
+                               `?subject=${subject}` +
+                               `&body=${encodeURIComponent(body)}`;
+
+            emailLink.href = mailtoLink;
+            emailLinkDiv.style.display = 'block'; // Show the generated link
+        }
+    </script>
 </body>
 </html>
