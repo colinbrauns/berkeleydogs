@@ -33,6 +33,40 @@ pwsh -NoLogo -NoProfile -Command "cd ./berkeleydogs.com; python -m http.server 5
 - Hosted via GitHub Pages. Ensure `CNAME` is `berkeleydogs.com`.
 - Commit changes and push to `main`. In repository settings enable Pages for the root.
 
+### CI/CD to Linode (GitHub Actions)
+
+This repo includes `.github/workflows/deploy.yml` to sync the repo to a Linode server on every push to `main` using rsync over SSH.
+
+1) On Linode
+- Create a non-root user (e.g., `deploy`) and ensure SSH access.
+- Create the target dir (e.g., `/var/www/berkeleydogs.com`) and configure your web server (nginx) to serve that directory.
+
+2) In GitHub repo Settings → Secrets and variables → Actions, add:
+- `SSH_PRIVATE_KEY`: Private key matching the public key added to the Linode user's `~/.ssh/authorized_keys`.
+- `REMOTE_HOST`: Your Linode IP or hostname.
+- `REMOTE_USER`: The SSH username (e.g., `deploy`).
+- `REMOTE_PORT`: SSH port (usually `22`).
+- `REMOTE_TARGET`: Absolute path to deploy to (e.g., `/var/www/berkeleydogs.com`).
+
+3) Push to `main` and the workflow will rsync files to the server and optionally reload nginx.
+
+### Auto-sync from local to GitHub
+
+For automatic local push (Windows PowerShell 7), you can run a simple background loop during active development:
+
+```powershell
+while ($true) {
+  git add -A
+  if (-not [string]::IsNullOrWhiteSpace((git status --porcelain))) {
+    git commit -m "auto: save"
+    git push origin main
+  }
+  Start-Sleep -Seconds 30
+}
+```
+
+Stop the loop with Ctrl+C when done.
+
 ## Community forum (Discourse)
 
 - This site links to and can embed a Discourse forum.
