@@ -50,6 +50,7 @@
                     <li><a href="#why-dog-parks">Our Cause</a></li>
                     <li><a href="#help">How to Help</a></li>
                     <li><a href="#news-events">News & Events</a></li>
+                    <li><a href="#forum">Forum</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -306,6 +307,21 @@
         </div>
     </section>
 
+    <section id="forum" class="section-padded">
+        <div class="container">
+            <h3>Community Forum</h3>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 20px;">Join the conversation, propose ideas, and collaborate with neighbors. Our community forum runs on open‑source Discourse.</p>
+            <p style="text-align: center; margin-bottom: 30px;">
+                <a class="button primary" href="https://forum.berkeleydogs.com" target="_blank" rel="noopener noreferrer">Enter the Forum</a>
+            </p>
+            <div class="card forum-embed">
+                <h4>Discuss this page</h4>
+                <p>Prefer to comment right here? Use the embedded Discourse thread below.</p>
+                <div id="discourse-comments"></div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="section-padded">
         <div class="container">
             <h3>Contact Us & Follow Our Progress</h3>
@@ -461,6 +477,25 @@
         (function updateYear(){
             const yearSpan = document.getElementById('currentYear');
             if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        })();
+
+        // Discourse embeddable comments (optional – requires a running Discourse at forum.berkeleydogs.com)
+        (function initDiscourseEmbed() {
+          var discourseUrl = 'https://forum.berkeleydogs.com/'; // TODO: replace with your Discourse URL
+          if (!document.getElementById('discourse-comments')) return;
+          try {
+            window.DiscourseEmbed = {
+              discourseUrl: discourseUrl,
+              discourseEmbedUrl: window.location.origin + '/#forum'
+            };
+            var d = document.createElement('script');
+            d.type = 'text/javascript';
+            d.async = true;
+            d.src = window.DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.head || document.body).appendChild(d);
+          } catch (e) {
+            // no-op
+          }
         })();
     </script>
 </body>

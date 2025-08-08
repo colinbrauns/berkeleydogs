@@ -348,6 +348,17 @@ header nav ul li a.active {
     margin-top: 10px;
 }
 
+/* Forum */
+.forum-embed {
+    margin-top: 20px;
+}
+.forum-embed h4 {
+    margin-bottom: 10px;
+}
+#discourse-comments {
+    margin-top: 10px;
+}
+
 /* Contact City Council Section */
 .council-contact-form {
     background-color: var(--white);

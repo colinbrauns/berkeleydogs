@@ -32,3 +32,12 @@ pwsh -NoLogo -NoProfile -Command "cd ./berkeleydogs.com; python -m http.server 5
 
 - Hosted via GitHub Pages. Ensure `CNAME` is `berkeleydogs.com`.
 - Commit changes and push to `main`. In repository settings enable Pages for the root.
+
+## Community forum (Discourse)
+
+- This site links to and can embed a Discourse forum.
+- Steps:
+  1. Provision a Discourse instance (e.g., on a small VPS or using Discourse hosting). Set base URL, e.g., `https://forum.berkeleydogs.com`.
+  2. Configure CORS/embedding: in Discourse admin, add `https://berkeleydogs.com` as an allowed embed origin.
+  3. In `index.html`, ensure the Forum button points to your forum URL and the embed script `discourseUrl` matches it.
+  4. Optionally map DNS: create CNAME `forum.berkeleydogs.com` to your Discourse host.
