@@ -151,7 +151,7 @@ mkdir -p /var/www/berkeleydogs.com
 chown deploy:deploy /var/www/berkeleydogs.com
 chmod 755 /var/www/berkeleydogs.com
 
-# Create nginx site configuration
+# Create nginx site configuration for berkeleydogs.com
 cat > /etc/nginx/sites-available/berkeleydogs.com << 'EOF'
 server {
     listen 80;
@@ -191,9 +191,21 @@ server {
 }
 EOF
 
-# Enable site
-ln -sf /etc/nginx/sites-available/berkeleydogs.com /etc/nginx/sites-enabled/
-rm -f /etc/nginx/sites-enabled/default
+# Enable site (only if it doesn't conflict with existing sites)
+if [ ! -L /etc/nginx/sites-enabled/berkeleydogs.com ]; then
+    ln -sf /etc/nginx/sites-available/berkeleydogs.com /etc/nginx/sites-enabled/
+    echo "✅ Nginx site configuration enabled"
+else
+    echo "⚠️  Site already enabled"
+fi
+
+# Only remove default if no other sites exist
+if [ "$(ls -1 /etc/nginx/sites-enabled/ | wc -l)" -eq 1 ] && [ -f /etc/nginx/sites-enabled/default ]; then
+    rm -f /etc/nginx/sites-enabled/default
+    echo "✅ Default site removed"
+else
+    echo "⚠️  Keeping existing site configurations"
+fi
 
 # Test nginx configuration
 nginx -t

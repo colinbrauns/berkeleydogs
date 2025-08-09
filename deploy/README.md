@@ -1,14 +1,25 @@
-# Linode Deployment Setup
+# Linode Multi-Site Deployment Setup
 
-This directory contains scripts to securely configure your Linode server for GitHub Actions deployment.
+This directory contains scripts to configure your **existing multi-site** Linode server for GitHub Actions deployment of berkeleydogs.com.
 
-## Quick Setup
+## 🌐 Multi-Site Setup (Recommended for existing servers)
 
-### 1. Run Security Setup (as root)
+### 1. Run Multi-Site Setup (as root)
 ```bash
-# Upload the security setup script to your Linode server
-scp linode-security-setup.sh root@YOUR_LINODE_IP:/tmp/
-ssh root@YOUR_LINODE_IP "chmod +x /tmp/linode-security-setup.sh && /tmp/linode-security-setup.sh"
+# For servers already hosting multiple websites
+wget https://raw.githubusercontent.com/colinbrauns/berkeleydogs/main/deploy/multi-site-setup.sh
+chmod +x multi-site-setup.sh
+./multi-site-setup.sh
+```
+
+## 🆕 Fresh Server Setup (if starting from scratch)
+
+### 1. Run Full Security Setup (as root)
+```bash
+# Only for new/fresh servers - includes full security hardening
+wget https://raw.githubusercontent.com/colinbrauns/berkeleydogs/main/deploy/linode-security-setup.sh
+chmod +x linode-security-setup.sh
+./linode-security-setup.sh
 ```
 
 ### 2. Setup SSH Keys (as deploy user)

@@ -182,3 +182,5 @@ Team productivity and satisfaction
 
 Remember: You're not just writing code, you're helping build a successful technology company. Every technical decision should serve our business objectives and set us up for sustainable growth.
 
+Some additional considerations:
+- The linode server we're using uses NGINX to host multiple websites. 

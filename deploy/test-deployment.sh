@@ -83,10 +83,20 @@ fi
 
 # Test website accessibility
 echo "6. Testing website accessibility..."
-if curl -s --connect-timeout 10 "http://$LINODE_IP" | grep -q "Berkeley Dog"; then
-    echo "✅ Website is accessible"
+if curl -s --connect-timeout 10 -H "Host: berkeleydogs.com" "http://$LINODE_IP" | grep -q "Berkeley Dog"; then
+    echo "✅ Website is accessible via IP with Host header"
+elif curl -s --connect-timeout 10 "http://berkeleydogs.com" | grep -q "Berkeley Dog"; then
+    echo "✅ Website is accessible via domain name"
 else
     echo "⚠️  Website may not be accessible (this is normal before first deployment)"
+fi
+
+# Test nginx multi-site configuration
+echo "7. Testing multi-site nginx configuration..."
+if ssh -i "$SSH_KEY_PATH" -p "$REMOTE_PORT" "$REMOTE_USER@$LINODE_IP" "sudo nginx -T | grep -q 'server_name.*berkeleydogs.com'"; then
+    echo "✅ Nginx multi-site configuration includes berkeleydogs.com"
+else
+    echo "⚠️  berkeleydogs.com not found in nginx configuration"
 fi
 
 echo ""

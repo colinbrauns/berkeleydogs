@@ -37,11 +37,24 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script_stop: true
           script: |
-            # Ensure correct permissions and optionally reload nginx
-            if [ -d "$REMOTE_TARGET" ]; then
-              sudo chown -R $USER:$USER "$REMOTE_TARGET"
+            # Ensure correct permissions for multi-site setup
+            if [ -d "${{ secrets.REMOTE_TARGET }}" ]; then
+              sudo chown -R deploy:deploy "${{ secrets.REMOTE_TARGET }}"
+              find "${{ secrets.REMOTE_TARGET }}" -type f -exec chmod 644 {} \;
+              find "${{ secrets.REMOTE_TARGET }}" -type d -exec chmod 755 {} \;
             fi
+            
+            # Test and reload nginx configuration (safe for multi-site)
             if command -v nginx >/dev/null 2>&1; then
-              sudo nginx -t && sudo systemctl reload nginx || true
+              if sudo nginx -t; then
+                sudo systemctl reload nginx
+                echo "✅ Nginx reloaded successfully"
+              else
+                echo "❌ Nginx configuration test failed - not reloading"
+                exit 1
+              fi
             fi
+            
+            # Log deployment
+            echo "🚀 Deployment completed at $(date)" >> "${{ secrets.REMOTE_TARGET }}/deploy.log"
 
