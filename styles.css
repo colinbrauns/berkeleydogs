@@ -597,12 +597,99 @@ section[id] { scroll-margin-top: 90px; }
     }
 }
 
+/* Performance improvements */
+/* Add will-change for smooth animations */
+.button,
+.card,
+.social-links a {
+    will-change: transform;
+}
+
+/* Optimize images */
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+/* Lazy loading support */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* Add animation for slide-in notification */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Improve focus visibility for keyboard users */
+.card:focus-within {
+    outline: 2px solid var(--secondary-gold);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card {
+        border: 1px solid var(--text-color);
+    }
+}
+
+/* Print styles */
+@media print {
+    header,
+    footer,
+    .social-links,
+    .button,
+    #discourse-comments {
+        display: none;
+    }
+    
+    .hero {
+        background: none;
+        color: black;
+        padding: 20px 0;
+    }
+    
+    .section-alt {
+        background: white;
+    }
+    
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
+
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation: none !important;
         transition: none !important;
         scroll-behavior: auto !important;
+    }
+    
+    .button,
+    .card,
+    .social-links a {
+        will-change: auto;
     }
 }
 
