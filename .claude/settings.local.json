@@ -6,7 +6,9 @@
       "Bash(ssh:*)",
       "Bash(git remote set-url:*)",
       "Bash(git pull:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(chmod:*)",
+      "Bash(./test-deployment.sh:*)"
     ],
     "deny": []
   }
