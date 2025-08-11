@@ -10,7 +10,7 @@
     <meta name="robots" content="index, follow">
     <meta name="language" content="en-US">
     <meta name="revisit-after" content="7 days">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://forum.berkeleydogs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://forum.berkeleydogs.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://forum.berkeleydogs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://forum.berkeleydogs.com;">
     <link rel="canonical" href="https://berkeleydogs.com/">
     <link rel="icon" type="image/jpeg" href="images/happy-dog1.jpg">
     <meta property="og:type" content="website">
@@ -34,7 +34,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){dataLayer.push(arguments);} 
         gtag('js', new Date());
         gtag('config', 'GA_TRACKING_ID');
     </script>
@@ -229,7 +229,7 @@
                     <i class="fas fa-lightbulb"></i>
                     <h4>Share Your Ideas</h4>
                     <p>Have creative solutions? Different perspectives? We want to hear them all - there's no single right answer.</p>
-                    <a href="#contact" class="button secondary">Contact Us</a>
+                    <a href="#contact" class="button secondary" data-scroll-to="contact" data-context="materials">Contact Us</a>
                 </div>
                 <div class="card help-item">
                     <i class="fas fa-users"></i>
@@ -246,7 +246,7 @@
         <div class="container">
             <h3>Contact Your City Council Members</h3>
             <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Directly contact your City Council members to express your support for new dog parks in Berkeley. Use the form below to generate a pre-filled email.</p>
-            <div class="council-contact-form">
+            <form id="councilForm" class="council-contact-form" novalidate>
                 <label for="userName">Your Name:</label>
                 <input type="text" id="userName" placeholder="John Doe" required>
 
@@ -256,13 +256,13 @@
                 <label for="userMessage">Your Message (Optional - will be appended to a standard message):</label>
                 <textarea id="userMessage" placeholder="Add any personal thoughts or reasons why dog parks are important to you."></textarea>
 
-                <button type="button" class="button primary" onclick="generateCouncilEmail()">Generate Email to Council</button>
+                <button type="submit" class="button primary">Generate Email to Council</button>
 
                 <div id="generatedEmailLink" style="display: none;" aria-live="polite">
                     <p>Click the link below to open your email client with the pre-filled message:</p>
                     <a id="emailLink" href="#" target="_blank">Open Email to City Council</a>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -275,13 +275,13 @@
                     <i class="fas fa-file-pdf"></i>
                     <h4>Our Talking Points (PDF)</h4>
                     <p>A concise summary of our key arguments and facts to use when speaking with officials or community members.</p>
-                    <a href="#contact" class="button secondary" onclick="scrollToContact('materials')">Request Materials</a>
+                    <a href="#contact" class="button secondary" data-scroll-to="contact" data-context="materials">Request Materials</a>
                 </div>
                 <div class="card download-item">
                     <i class="fas fa-map-marked-alt"></i>
                     <h4>Proposed Solutions Brief (PDF)</h4>
                     <p>A detailed brief outlining our proposed solutions and strategies for expanding dog park access in Berkeley.</p>
-                    <a href="#contact" class="button secondary" onclick="scrollToContact('materials')">Request Materials</a>
+                    <a href="#contact" class="button secondary" data-scroll-to="contact" data-context="materials">Request Materials</a>
                 </div>
             </div>
         </div>
@@ -298,13 +298,13 @@
                         <h4>Community Meeting Scheduled!</h4>
                         <span class="news-date"><i class="far fa-calendar-alt"></i> May 21, 2025</span>
                         <p>Join us on June 10th at 6:00 PM at the Berkeley Main Library community room to discuss proposed dog park locations and provide your feedback. All are welcome!</p>
-                        <a href="#" class="read-more">Read More &raquo;</a>
+                        <a href="#" class="read-more">Read More »</a>
                     </div>
                     <div class="card news-item">
                         <h4>Petition Reaches 1,000 Signatures!</h4>
                         <span class="news-date"><i class="far fa-calendar-alt"></i> April 28, 2025</span>
                         <p>We're thrilled to announce that our online petition has surpassed 1,000 signatures! Thank you for your incredible support. Let's keep the momentum going!</p>
-                        <a href="#" class="read-more">Read More &raquo;</a>
+                        <a href="#" class="read-more">Read More »</a>
                     </div>
                     <p style="text-align: center; margin-top: 20px;"><a href="#" class="button primary">View All Updates</a></p>
                 </div>
@@ -313,7 +313,7 @@
                     <h3>Upcoming Events</h3>
                     <div class="card calendar-link-container">
                         <p>For a comprehensive list of all our upcoming meetings, events, and important dates, please refer to our official Google Calendar:</p>
-                        <a href="#contact" class="button primary" onclick="scrollToContact('calendar')">
+                        <a href="#contact" class="button primary" data-scroll-to="contact" data-context="calendar">
                             <i class="far fa-calendar-alt"></i> Request Calendar Access
                         </a>
                         <p style="font-size: 0.9em; color: #777; margin-top: 15px;">(Opens in a new tab)</p>
@@ -372,324 +372,6 @@
         </div>
     </footer>
 
-    <script>
-        /*
-         * JavaScript for Website Interactivity
-         *
-         * This section handles smooth scrolling for navigation links
-         * and the generation of the "Contact City Council" email.
-         */
-
-        // Smooth scrolling for navigation links
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        document.querySelectorAll('nav ul li a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent default anchor jump
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                    // Calculate offset to account for sticky header
-                    const headerOffset = document.querySelector('header').offsetHeight;
-                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                    const offsetPosition = elementPosition - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: prefersReducedMotion ? 'auto' : 'smooth' // Respect reduced motion
-                    });
-
-                    // Update active class for navigation links
-                    document.querySelectorAll('nav ul li a').forEach(link => {
-                        link.classList.remove('active');
-                        link.removeAttribute('aria-current');
-                    });
-                    this.classList.add('active');
-                    this.setAttribute('aria-current', 'page');
-                }
-            });
-        });
-
-        // Highlight active navigation link based on scroll position
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]'); // Select all sections with an ID
-            const navLinks = document.querySelectorAll('nav ul li a');
-            const headerHeight = document.querySelector('header').offsetHeight; // Get height of sticky header
-            let currentActiveSection = '';
-
-            // Determine which section is currently in view
-            sections.forEach(section => {
-                // Adjust sectionTop by headerHeight to correctly detect when section is "active"
-                const sectionTop = section.offsetTop - headerHeight - 1; // -1 for slight buffer
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (pageYOffset >= sectionTop && pageYOffset < sectionBottom) {
-                    currentActiveSection = section.getAttribute('id');
-                }
-            });
-
-            // Apply 'active' class to the corresponding navigation link
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                link.removeAttribute('aria-current');
-                if (link.getAttribute('href').includes(currentActiveSection)) {
-                    link.classList.add('active');
-                    link.setAttribute('aria-current', 'page');
-                }
-            });
-        });
-
-        // Function to scroll to contact section with context
-        function scrollToContact(context) {
-            const contactSection = document.querySelector('#contact');
-            if (contactSection) {
-                const headerOffset = document.querySelector('header').offsetHeight;
-                const elementPosition = contactSection.getBoundingClientRect().top + window.pageYOffset;
-                const offsetPosition = elementPosition - headerOffset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
-                });
-                
-                // Create subject line based on context
-                let subject = '';
-                switch(context) {
-                    case 'petition': subject = 'Petition Access Request'; break;
-                    case 'calendar': subject = 'Calendar Access Request'; break;
-                    case 'materials': subject = 'Advocacy Materials Request'; break;
-                    default: subject = 'General Inquiry';
-                }
-                
-                // Show a helpful message
-                setTimeout(() => {
-                    const messageBox = document.createElement('div');
-                    messageBox.style.cssText = `
-                        position: fixed; top: 20px; right: 20px; 
-                        background-color: #e8f5e9; color: #2e7d32; border: 1px solid #4caf50;
-                        padding: 15px; border-radius: 8px; z-index: 9999;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 300px;
-                        animation: slideIn 0.3s ease-out;
-                    `;
-                    messageBox.innerHTML = `
-                        <p><strong>Ready to help!</strong><br>
-                        Send us an email with subject: "${subject}"</p>
-                        <button onclick="this.parentNode.remove()" style="margin-top: 10px; padding: 5px 10px; background-color: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">Got it</button>
-                    `;
-                    document.body.appendChild(messageBox);
-                    
-                    // Auto-remove after 5 seconds
-                    setTimeout(() => {
-                        if (messageBox.parentNode) messageBox.remove();
-                    }, 5000);
-                }, 500);
-            }
-        }
-
-        // Function to generate email to City Council
-        function generateCouncilEmail() {
-            const userName = document.getElementById('userName').value;
-            const userEmail = document.getElementById('userEmail').value;
-            const userMessage = document.getElementById('userMessage').value;
-            const emailLinkDiv = document.getElementById('generatedEmailLink');
-            const emailLink = document.getElementById('emailLink');
-
-            // Basic validation
-            if (!userName || !userEmail) {
-                // Using a simple message box for user feedback
-                const messageBox = document.createElement('div');
-                messageBox.style.cssText = `
-                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                    background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
-                    padding: 20px; border-radius: 8px; z-index: 9999;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.2); text-align: center;
-                    max-width: 90%; /* Responsive width */
-                `;
-                messageBox.innerHTML = `
-                    <p>Please enter your Name and Email to generate the message.</p>
-                    <button onclick="this.parentNode.remove()" style="margin-top: 15px; padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">OK</button>
-                `;
-                document.body.appendChild(messageBox);
-                return;
-            }
-
-            // City Council email addresses (from previous search results)
-            const councilEmails = [
-                'council@berkeleyca.gov', // General council email
-                'mayor@berkeleyca.gov', // Mayor's email
-                'rkesarwani@berkeleyca.gov', // District 1
-                'ttaplin@berkeleyca.gov',    // District 2
-                'bbartlett@berkeleyca.gov',  // District 3
-                'itregub@berkeleyca.gov',    // District 4
-                'sokeefe@berkeleyca.gov',    // District 5
-                'bblackaby@berkeleyca.gov',  // District 6
-                'clunaparra@berkeleyca.gov', // District 7
-                'mhumbert@berkeleyca.gov'    // District 8
-            ];
-
-            const subject = encodeURIComponent("Support for More Dog Parks in Berkeley");
-            let body = `Dear Berkeley City Council Members,\n\n`;
-            body += `I am writing to express my strong support for the creation of additional designated dog parks in Berkeley. As a resident and a member of the community, I believe that more dog parks will bring significant benefits to our city.\n\n`;
-            body += `Dog parks promote responsible pet ownership by providing safe, legal spaces for off-leash exercise, which is crucial for canine health and socialization. They also foster community connections among residents and contribute to a safer, more harmonious urban environment by reducing unauthorized off-leash activity in other public spaces.\n\n`;
-            body += `I urge you to prioritize the allocation of resources and identify suitable locations for new dog parks across Berkeley.\n\n`;
-
-            if (userMessage.trim() !== '') {
-                body += `\nMy personal thoughts on this matter are:\n"${userMessage.trim()}"\n\n`;
-            }
-
-            body += `Thank you for your time and consideration of this important community need.\n\n`;
-            body += `Sincerely,\n${userName}\n${userEmail}\nBerkeley Resident`;
-
-            const mailtoLink = `mailto:${councilEmails.join(',')}` +
-                               `?subject=${subject}` +
-                               `&body=${encodeURIComponent(body)}`;
-
-            emailLink.href = mailtoLink;
-            emailLinkDiv.style.display = 'block'; // Show the generated link
-        }
-
-        // Set current year in footer
-        (function updateYear(){
-            const yearSpan = document.getElementById('currentYear');
-            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-        })();
-
-        // Simple privacy-friendly analytics
-        (function initBasicAnalytics() {
-            // Track key user actions without personal data
-            const trackEvent = (action, section) => {
-                // Store in localStorage for basic usage analytics
-                const events = JSON.parse(localStorage.getItem('siteEvents') || '[]');
-                events.push({
-                    action,
-                    section,
-                    timestamp: Date.now(),
-                    page: window.location.pathname
-                });
-                
-                // Keep only last 100 events to respect privacy
-                if (events.length > 100) {
-                    events.splice(0, events.length - 100);
-                }
-                
-                localStorage.setItem('siteEvents', JSON.stringify(events));
-                
-                // Optional: send to your own analytics endpoint
-                // fetch('/analytics', { method: 'POST', body: JSON.stringify({ action, section }) });
-            };
-            
-            // Track button clicks
-            document.addEventListener('click', (e) => {
-                if (e.target.classList.contains('button') || e.target.closest('.button')) {
-                    const button = e.target.classList.contains('button') ? e.target : e.target.closest('.button');
-                    const section = button.closest('section')?.id || 'unknown';
-                    const text = button.textContent.trim();
-                    trackEvent('button_click', `${section}:${text}`);
-                }
-            });
-            
-            // Track form interactions
-            document.addEventListener('submit', (e) => {
-                const form = e.target.closest('form') || e.target;
-                const section = form.closest('section')?.id || 'unknown';
-                trackEvent('form_submit', section);
-            });
-            
-            // Track scroll depth
-            let maxScroll = 0;
-            window.addEventListener('scroll', () => {
-                const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-                if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
-                    maxScroll = scrollPercent;
-                    trackEvent('scroll_depth', `${scrollPercent}%`);
-                }
-            });
-            
-            // Track page load
-            trackEvent('page_load', window.location.pathname);
-        })();
-
-        // Error handling for external fonts and resources
-        (function checkExternalResources() {
-            // Check if Font Awesome loaded
-            const testFontAwesome = () => {
-                const testIcon = document.createElement('i');
-                testIcon.className = 'fas fa-test';
-                testIcon.style.position = 'absolute';
-                testIcon.style.left = '-9999px';
-                document.body.appendChild(testIcon);
-                
-                const beforeContent = window.getComputedStyle(testIcon, ':before').content;
-                document.body.removeChild(testIcon);
-                
-                if (beforeContent === 'none' || beforeContent === '') {
-                    console.warn('Font Awesome failed to load. Consider using fallback icons.');
-                    // Add fallback styling for icons
-                    const fallbackStyle = document.createElement('style');
-                    fallbackStyle.textContent = `
-                        .fas::before, .far::before, .fab::before { 
-                            content: "●"; 
-                            font-weight: bold; 
-                        }
-                    `;
-                    document.head.appendChild(fallbackStyle);
-                }
-            };
-            
-            // Test after resources should have loaded
-            setTimeout(testFontAwesome, 2000);
-        })();
-
-        // Discourse embeddable comments with better error handling
-        (function initDiscourseEmbed() {
-          var discourseUrl = 'https://forum.berkeleydogs.com/';
-          const discourseContainer = document.getElementById('discourse-comments');
-          
-          if (!discourseContainer) return;
-          
-          try {
-            // Set a timeout for discourse loading
-            const timeoutId = setTimeout(() => {
-                discourseContainer.innerHTML = `
-                    <div style="padding: 20px; text-align: center; color: #666;">
-                        <p>Forum comments temporarily unavailable.</p>
-                        <p><a href="mailto:advocates@berkeleydogs.com?subject=Forum%20Access">Contact us directly</a> to share your thoughts!</p>
-                    </div>
-                `;
-            }, 10000); // 10 second timeout
-            
-            window.DiscourseEmbed = {
-              discourseUrl: discourseUrl,
-              discourseEmbedUrl: window.location.origin + '/#forum'
-            };
-            
-            const d = document.createElement('script');
-            d.type = 'text/javascript';
-            d.async = true;
-            d.src = discourseUrl + 'javascripts/embed.js';
-            
-            // Clear timeout if script loads successfully
-            d.onload = () => clearTimeout(timeoutId);
-            d.onerror = () => {
-                clearTimeout(timeoutId);
-                discourseContainer.innerHTML = `
-                    <div style="padding: 20px; text-align: center; color: #666;">
-                        <p>Unable to load forum comments.</p>
-                        <p><a href="mailto:advocates@berkeleydogs.com?subject=Forum%20Access">Email us your thoughts!</a></p>
-                    </div>
-                `;
-            };
-            
-            (document.head || document.body).appendChild(d);
-          } catch (e) {
-            discourseContainer.innerHTML = `
-                <div style="padding: 20px; text-align: center; color: #666;">
-                    <p>Comments unavailable. <a href="mailto:advocates@berkeleydogs.com?subject=Feedback">Email us instead!</a></p>
-                </div>
-            `;
-          }
-        })();
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>

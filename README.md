@@ -7,8 +7,9 @@ Static site for Berkeley Dog Park Advocates.
 - Open `index.html` directly in your browser, or serve the folder:
 
 ```bash
-pwsh -NoLogo -NoProfile -Command "cd ./berkeleydogs.com; python -m http.server 5500" # then visit http://localhost:5500
+python -m http.server 5500 # then visit http://localhost:5500
 ```
+- If your files are inside a subfolder, `cd` into it first.
 
 ## Replace placeholders
 
