@@ -1,0 +1,14 @@
+{
+  "name": "Berkeley Dog Park Advocates",
+  "short_name": "Berkeley Dogs",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#002676",
+  "icons": [
+    { "src": "images/happy-dog1.jpg", "sizes": "192x192", "type": "image/jpeg" },
+    { "src": "images/happy-dog1.jpg", "sizes": "512x512", "type": "image/jpeg" }
+  ]
+}
+

@@ -1,0 +1,878 @@
+/*
+ * CSS Styling for Berkeley Dog Advocates Website
+ *
+ * This section defines the visual appearance of the website,
+ * including colors, typography, layout, and responsiveness.
+ * It aims for a clean, modern, and inviting aesthetic.
+ */
+
+/* Base Styles & Reset */
+:root {
+    --primary-blue: #002676; /* Berkeley Blue */
+    --primary-blue-dark: #001a4d; /* Darker Berkeley Blue */
+    --accent-green: #2ecc71; /* Keep for strong CTA */
+    --accent-green-dark: #27ae60; /* Keep for strong CTA */
+    --secondary-gold: #FDB515; /* California Gold (was secondary-orange) */
+    --secondary-gold-dark: #e6a300; /* Darker California Gold (was secondary-orange-dark) */
+    --dark-grey: #2c3e50; /* Retained for header/footer and strong contrast */
+    --light-grey: #ecf0f1;
+    --white: #ffffff;
+    --text-color: #333333;
+    --border-radius: 8px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--light-grey);
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+.skip-link:focus {
+    position: fixed;
+    left: 16px;
+    top: 16px;
+    width: auto;
+    height: auto;
+    padding: 10px 14px;
+    background: var(--primary-blue);
+    color: var(--white);
+    border-radius: 6px;
+    z-index: 2000;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0; /* Consistent vertical padding for sections */
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: 'Inter', sans-serif;
+    color: var(--dark-grey);
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center; /* Default all headings to center */
+}
+
+h1 {
+    font-size: 2.8em;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 2.4em;
+    margin-bottom: 30px;
+}
+
+h3 {
+    font-size: 1.9em;
+    margin-bottom: 25px;
+}
+
+h4 {
+    font-size: 1.4em;
+    color: var(--primary-blue);
+    text-align: left; /* Override for specific items */
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-blue-dark);
+    text-decoration: underline;
+}
+
+/* Visible focus styles */
+a:focus-visible,
+.button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--secondary-gold);
+    outline-offset: 2px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 12px 28px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Ensure button text is centered */
+}
+
+.button:hover {
+    background: var(--primary-blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button.primary {
+    background: var(--accent-green);
+}
+
+.button.primary:hover {
+    background: var(--accent-green-dark);
+}
+
+.button.secondary {
+    background: var(--secondary-gold); /* Updated to gold */
+    font-size: 0.95em;
+    padding: 10px 22px;
+}
+
+.button.secondary:hover {
+    background: var(--secondary-gold-dark); /* Updated to darker gold */
+}
+
+/* Header & Navigation */
+header {
+    background: var(--dark-grey);
+    color: var(--white);
+    padding: 15px 0;
+    border-bottom: 4px solid var(--primary-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6em;
+    text-align: left; /* Override default for header title */
+    flex-shrink: 0;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+header nav ul li {
+    margin-left: 25px;
+}
+
+header nav ul li a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 0;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--primary-blue);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/hero-dog-park.jpg') no-repeat center center/cover; /* Use local image */
+    color: var(--white);
+    text-align: center;
+    padding: 120px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 550px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero h2 {
+    font-size: 3.5em;
+    margin-bottom: 25px;
+    color: var(--white);
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    color: var(--light-grey);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Section Styling */
+.section-padded {
+    background-color: var(--white);
+}
+
+.section-alt {
+    background-color: var(--light-grey);
+}
+
+/* Grid Layouts */
+.grid-2-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.grid-3-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Card-like Elements */
+.card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left; /* Default text alignment for cards */
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card h4 {
+    margin-bottom: 10px;
+}
+
+/* Specific Section Elements */
+
+.solution-item { /* New style for solution items */
+    background-color: var(--white);
+    border-left: 6px solid var(--secondary-gold); /* Gold accent */
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.help-item {
+    /* Inherits from .card */
+    text-align: center;
+}
+
+.help-item i {
+    font-size: 4em;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.help-item h4 {
+    color: var(--dark-grey);
+    text-align: center; /* Override default card h4 alignment */
+}
+
+.help-item .button {
+    margin-top: auto;
+    align-self: center; /* Center button in flex column */
+}
+
+.news-item {
+    /* Inherits from .card */
+    margin-bottom: 25px; /* Add margin for separation in news list */
+}
+
+.news-item h4 {
+    color: var(--dark-grey);
+}
+
+.news-date {
+    font-size: 0.85em;
+    color: #777;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.read-more {
+    color: var(--primary-blue);
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Forum */
+.forum-embed {
+    margin-top: 20px;
+}
+.forum-embed h4 {
+    margin-bottom: 10px;
+}
+#discourse-comments {
+    margin-top: 10px;
+}
+
+/* Contact City Council Section */
+.council-contact-form {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.council-contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-grey);
+}
+
+.council-contact-form input[type="text"],
+.council-contact-form input[type="email"],
+.council-contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.council-contact-form input[type="text"]:focus,
+.council-contact-form input[type="email"]:focus,
+.council-contact-form textarea:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+
+.council-contact-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.council-contact-form .button {
+    width: auto;
+    margin-top: 10px;
+}
+
+#generatedEmailLink {
+    display: block;
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #e8f5e9;
+    border: 1px solid var(--accent-green);
+    border-radius: var(--border-radius);
+    font-size: 1.1em;
+    text-align: center;
+    word-break: break-all;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+#generatedEmailLink a {
+    color: var(--accent-green-dark);
+    font-weight: 600;
+}
+
+/* Download Materials Section */
+.download-item {
+    /* Inherits from .card */
+    text-align: center;
+}
+
+.download-item i {
+    font-size: 3.5em;
+    color: var(--secondary-gold); /* Updated to gold */
+    margin-bottom: 15px;
+}
+
+.download-item h4 {
+    color: var(--dark-grey);
+    text-align: center; /* Override default card h4 alignment */
+}
+
+.download-item .button {
+    margin-top: auto;
+    background-color: var(--secondary-gold); /* Updated to gold */
+    align-self: center;
+}
+
+.download-item .button:hover {
+    background-color: var(--secondary-gold-dark); /* Updated to darker gold */
+}
+
+/* Research & Best Practices Section */
+.research-item {
+    background-color: var(--white);
+    border-left: 6px solid var(--primary-blue); /* Blue accent */
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.research-item h4 {
+    color: var(--primary-blue);
+}
+
+/* Upcoming Events / Calendar Section */
+.calendar-link-container {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+.calendar-link-container p {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+/* Contact Us & Follow Section */
+.social-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-links a {
+    color: var(--primary-blue);
+    font-size: 2.8em;
+    margin: 0 18px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-blue-dark);
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    background: var(--dark-grey);
+    color: var(--light-grey);
+    text-align: center;
+    padding: 25px 0;
+    font-size: 0.9em;
+    border-top: 4px solid var(--primary-blue);
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* Responsive Design */
+/* Ensure anchored sections account for sticky header */
+section[id] { scroll-margin-top: 90px; }
+@media (max-width: 992px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    header h1 {
+        margin-bottom: 15px;
+    }
+    header nav ul {
+        justify-content: center;
+        margin-top: 10px;
+    }
+    header nav ul li {
+        margin: 0 12px;
+    }
+    .hero h2 {
+        font-size: 2.8em;
+    }
+    .hero p {
+        font-size: 1.1em;
+    }
+    .grid-2-cols,
+    .grid-3-cols {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+    }
+    .container {
+        padding: 30px 0;
+    }
+    h2 {
+        font-size: 2em;
+    }
+    h3 {
+        font-size: 1.6em;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 0;
+        min-height: 450px;
+    }
+    .hero h2 {
+        font-size: 2.2em;
+    }
+    .hero p {
+        font-size: 1em;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    header nav ul li {
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.4em;
+    }
+    h2 {
+        font-size: 1.8em;
+    }
+    h3 {
+        font-size: 1.4em;
+    }
+    .hero h2 {
+        font-size: 1.8em;
+    }
+    .hero p {
+        font-size: 0.9em;
+    }
+    header nav ul li {
+        margin: 0 5px;
+    }
+    .council-contact-form {
+        padding: 25px;
+    }
+}
+
+/* Performance improvements */
+/* Add will-change for smooth animations */
+.button,
+.card,
+.social-links a {
+    will-change: transform;
+}
+
+/* Optimize images */
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+/* Lazy loading support */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* Utility classes */
+.text-center { text-align: center; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.max-w-800 { max-width: 800px; }
+.max-w-700 { max-width: 700px; }
+.mt-20 { margin-top: 20px; }
+.mt-30 { margin-top: 30px; }
+.mt-60 { margin-top: 60px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-30 { margin-bottom: 30px; }
+
+/* Larger button variant */
+.button.button-lg {
+    font-size: 1.4em;
+    padding: 18px 40px;
+    font-weight: 600;
+}
+
+/* Forum section styling */
+.forum-section {
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+}
+.forum-section h2 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+/* Flyer section styling */
+.flyer-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-top: 3px solid var(--primary-blue);
+}
+
+.flyer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.flyer-text h3 {
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+.flyer-text ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.flyer-text li {
+    padding: 8px 0;
+    position: relative;
+    padding-left: 25px;
+}
+
+.flyer-text li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--secondary-gold);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.flyer-cta {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 2px solid var(--primary-blue);
+}
+
+.flyer-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flyer-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    text-align: center;
+    border: 3px solid var(--secondary-gold);
+    max-width: 280px;
+}
+
+.flyer-icon {
+    font-size: 4em;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.flyer-card h4 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.flyer-card p {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Responsive design for flyer section */
+@media (max-width: 768px) {
+    .flyer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .flyer-card {
+        max-width: 100%;
+    }
+}
+
+/* Toast/notice components (no inline styles required) */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 320px;
+    animation: slideIn 0.3s ease-out;
+}
+.toast--success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #4caf50;
+}
+.toast--error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.toast button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.toast--error button {
+    background-color: #dc3545;
+}
+
+/* Centered variant for modal-like toasts */
+.toast--center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: auto;
+}
+
+.notice {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+}
+
+/* Minor utility for small notes */
+.note-small {
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Spacing utilities not already defined */
+.mt-15 { margin-top: 15px; }
+.text-md { font-size: 1.1em; }
+
+/* Add animation for slide-in notification */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Improve focus visibility for keyboard users */
+.card:focus-within {
+    outline: 2px solid var(--secondary-gold);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card {
+        border: 1px solid var(--text-color);
+    }
+}
+
+/* Print styles */
+@media print {
+    header,
+    footer,
+    .social-links,
+    .button,
+    #discourse-comments {
+        display: none;
+    }
+    
+    .hero {
+        background: none;
+        color: black;
+        padding: 20px 0;
+    }
+    
+    .section-alt {
+        background: white;
+    }
+    
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .button,
+    .card,
+    .social-links a {
+        will-change: auto;
+    }
+}
+
+

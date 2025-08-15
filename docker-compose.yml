@@ -1,0 +1,14 @@
+services:
+  berkeleydogs:
+    container_name: app-berkeleydogs
+    build: .
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

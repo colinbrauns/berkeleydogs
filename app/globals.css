@@ -1,0 +1,82 @@
+:root {
+  --berkeley-blue: #002676;
+  --california-gold: #FDB515;
+  --white: #FFFFFF;
+  --bg: var(--berkeley-blue);
+  --text: var(--white);
+  --muted: rgba(255, 255, 255, 0.7);
+  --brand: var(--california-gold);
+  --accent: var(--california-gold);
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.2);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border);position:sticky;top:0;backdrop-filter:blur(12px);background:rgba(0,38,118,0.95);box-shadow:0 1px 3px 0 rgba(0,0,0,0.3);z-index:10}
+.brand{display:flex;align-items:center}
+.brand-logo{height:48px;width:auto;display:inline-block;object-fit:contain}
+.nav a{margin-left:16px;padding:12px 24px;border-radius:12px;transition:all 0.2s ease}
+.btn{display:inline-block;padding:12px 24px;border-radius:12px;font-weight:600;text-decoration:none!important;transition:all 0.2s ease}
+.btn-primary{background:var(--california-gold);color:var(--berkeley-blue);border:2px solid var(--california-gold)}
+.btn-primary:hover{background:var(--white);color:var(--berkeley-blue);border-color:var(--white);transform:translateY(-1px);box-shadow:0 4px 12px rgba(253,181,21,0.4)}
+.btn-large{padding:16px 32px;font-size:18px;font-weight:700}
+.btn-ghost{border:2px solid var(--border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--california-gold);color:var(--california-gold);transform:translateY(-1px)}
+.hero{padding:60px 24px 48px;background:
+  radial-gradient(1200px 400px at 10% -10%, rgba(253,181,21,.15), transparent 60%),
+  radial-gradient(1200px 400px at 90% -20%, rgba(255,255,255,.05), transparent 60%)}
+.hero h1{font-size:clamp(32px,4vw,54px);line-height:1.1;margin:0 0 16px;color:var(--california-gold)}
+.hero p{font-size:clamp(16px,2vw,20px);color:var(--muted);margin:0 0 32px;max-width:800px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:all 0.2s ease;backdrop-filter:blur(8px)}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{margin:0 0 12px;color:var(--california-gold);font-size:18px;font-weight:700}
+.section{padding:32px 24px}
+.section h2{color:var(--california-gold);text-align:center;margin-bottom:32px;font-size:clamp(24px,3vw,36px);font-weight:700}
+.cta-card{background:linear-gradient(135deg,rgba(253,181,21,0.2),rgba(255,255,255,0.1));color:var(--white);border-radius:20px;padding:36px 32px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid var(--border);backdrop-filter:blur(12px)}
+.cta-card h2{margin:0 0 16px;font-size:clamp(24px,3vw,32px);color:var(--california-gold)}
+.cta-card p{margin:0 0 32px;font-size:18px;opacity:0.9;max-width:600px;margin-left:auto;margin-right:auto}
+.cta-card .btn-primary{background:var(--california-gold);color:var(--berkeley-blue);border-color:var(--california-gold)}
+.cta-card .btn-primary:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 6px 20px rgba(253,181,21,0.4)}
+#petition{scroll-margin-top:90px}
+.input{width:100%;margin:8px 0 14px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(17,24,39,.6);color:var(--text)}
+.footer{padding:24px;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.badge{display:inline-block;padding:8px 16px;border-radius:20px;background:rgba(253,181,21,.15);color:var(--california-gold);font-weight:600;font-size:14px;border:1px solid rgba(253,181,21,.3);margin-bottom:16px}
+.small{font-size:13px;color:var(--muted)}
+
+/* Flyer section styling */
+.flyer-section{background:linear-gradient(135deg,rgba(253,181,21,0.1),rgba(255,255,255,0.05))}
+.flyer-container{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:32px}
+.flyer-image{text-align:center}
+.flyer-image img{max-width:100%;height:auto;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.flyer-actions h3{color:var(--california-gold);margin-bottom:24px;font-size:24px}
+.action-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:32px}
+.action-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;backdrop-filter:blur(8px)}
+.action-card h4{margin:0 0 12px;color:var(--california-gold);font-size:18px;font-weight:600}
+.action-card p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
+.flyer-download{text-align:center;padding:24px;background:var(--card-bg);border-radius:12px;border:1px solid var(--border)}
+.flyer-download .note{font-size:12px;color:var(--muted);margin-top:12px}
+.text-center{text-align:center}
+
+/* Responsive design for flyer section */
+@media (max-width:768px) {
+  .flyer-container{grid-template-columns:1fr;gap:24px}
+  .action-grid{grid-template-columns:1fr}
+}
+
+/* Volunteer section styling */
+.volunteer-section{background:linear-gradient(135deg,rgba(253,181,21,0.15),rgba(255,255,255,0.08))}
+.volunteer-section h2{color:var(--california-gold);text-align:center;margin-bottom:16px}
+.volunteer-section p{text-align:center;font-size:18px;color:var(--muted);margin-bottom:32px;max-width:700px;margin-left:auto;margin-right:auto}
+.contact-info{text-align:center;padding:24px;background:var(--card-bg);border-radius:12px;border:1px solid var(--border);backdrop-filter:blur(8px);max-width:500px;margin:0 auto}
+.contact-info h3{margin:0 0 16px;color:var(--california-gold);font-size:20px;font-weight:600}
+.contact-email{display:inline-block;font-size:18px;font-weight:600;color:var(--california-gold);text-decoration:none;padding:12px 24px;background:rgba(253,181,21,0.1);border-radius:8px;border:1px solid rgba(253,181,21,0.3);transition:all 0.2s ease}
+.contact-email:hover{background:rgba(253,181,21,0.2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(253,181,21,0.3)}
+
+/* Combined volunteer and donation section styling */
+.donation-info{text-align:center;padding:24px;background:var(--card-bg);border-radius:12px;border:1px solid var(--border);backdrop-filter:blur(8px);max-width:500px;margin:32px auto 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.donation-info h3{margin:0 0 16px;color:var(--california-gold);font-size:20px;font-weight:600}
+.donation-info p{margin:0 0 20px;font-size:16px;color:var(--muted);line-height:1.5}
