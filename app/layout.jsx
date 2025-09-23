@@ -33,6 +33,7 @@ export default function RootLayout({ children }) {
         <footer className="footer">
           <div className="container">
             <div className="footer-nav">
+              <a href="/calendar" className="footer-link">Events Calendar</a>
               <a href="/places" className="footer-link">Dog-friendly places map</a>
               <a href="/downloads" className="footer-link">Downloads</a>
               <a href="https://forum.berkeleydogs.com" className="footer-link">Community Forum</a>

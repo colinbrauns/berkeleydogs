@@ -110,6 +110,34 @@ a:hover{text-decoration:underline}
 .footer-link{color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s ease}
 .footer-link:hover{color:var(--california-gold);text-decoration:none}
 
+/* Calendar page */
+.calendar-container{margin:32px 0;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3);border:1px solid var(--border)}
+.calendar-embed{position:relative;width:100%;height:600px;background:#000}
+.calendar-embed iframe{width:100%;height:100%;border:0}
+.calendar-info{margin:48px 0}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:32px}
+.info-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.2s ease}
+.info-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.info-card h3{margin:0 0 16px;color:var(--california-gold);font-size:18px;font-weight:600}
+.info-card p{margin:0 0 16px;color:var(--muted);line-height:1.5}
+.info-card ul{margin:0;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.6}
+.info-card li{margin-bottom:6px}
+.calendar-actions{text-align:center;margin:48px 0;padding:32px;background:linear-gradient(135deg,rgba(253,181,21,0.1),rgba(255,255,255,0.05));border-radius:16px;border:1px solid var(--border)}
+.calendar-actions h3{color:var(--california-gold);margin-bottom:12px}
+.calendar-actions p{color:var(--muted);margin-bottom:24px}
+.action-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.calendar-notice{margin-top:32px;padding:20px;background:rgba(253,181,21,0.05);border-radius:12px;border:1px solid rgba(253,181,21,0.2);text-align:center}
+.calendar-notice p{color:var(--muted);font-size:14px;line-height:1.5;margin:0}
+.calendar-notice a{color:var(--california-gold);text-decoration:none}
+.calendar-notice a:hover{text-decoration:underline}
+
+/* Responsive calendar */
+@media (max-width:768px) {
+  .calendar-embed{height:400px}
+  .action-buttons{flex-direction:column;align-items:center}
+  .action-buttons .btn{width:100%;max-width:300px}
+}
+
 /* Performance optimizations */
 .hero{will-change:transform}
 .card{will-change:transform}
