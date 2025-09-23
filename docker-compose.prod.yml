@@ -1,0 +1,14 @@
+services:
+  berkeleydogs:
+    container_name: app-berkeleydogs
+    build: .
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_TELEMETRY_DISABLED=1
+    ports:
+      - "3000:3000"
+
+
+

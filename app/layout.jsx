@@ -1,4 +1,5 @@
 import './globals.css';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Berkeley Dogs',
@@ -14,14 +15,31 @@ export default function RootLayout({ children }) {
       <body>
         <header className="header">
           <div className="brand">
-            <img src="/berkdogslogo_curry.png" alt="Berkeley Dogs" className="brand-logo" />
+            <Image 
+              src="/berkdogslogo_curry.png" 
+              alt="Berkeley Dogs" 
+              width={48}
+              height={48}
+              priority={true}
+              className="brand-logo"
+              style={{ height: '48px', width: 'auto' }}
+            />
           </div>
           <nav className="nav">
             <a href="https://forum.berkeleydogs.com" className="btn btn-primary">Join the forum</a>
           </nav>
         </header>
         {children}
-        <footer className="footer">© {new Date().getFullYear()} Berkeley Dogs. All rights reserved.</footer>
+        <footer className="footer">
+          <div className="container">
+            <div className="footer-nav">
+              <a href="/places" className="footer-link">Dog-friendly places map</a>
+              <a href="/downloads" className="footer-link">Downloads</a>
+              <a href="https://forum.berkeleydogs.com" className="footer-link">Community Forum</a>
+            </div>
+            <p>© {new Date().getFullYear()} Berkeley Dogs. All rights reserved.</p>
+          </div>
+        </footer>
       </body>
     </html>
   );

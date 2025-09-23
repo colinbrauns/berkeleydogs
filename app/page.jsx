@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Home() {
   return (
     <main>
@@ -35,7 +37,16 @@ export default function Home() {
           
           <div className="flyer-container">
             <div className="flyer-image">
-              <img src="/flyer.png" alt="Berkeley Dogs Need You - Flyer promoting dog-friendly spaces in Berkeley" />
+              <Image 
+                src="/flyer.png" 
+                alt="Berkeley Dogs Need You - Flyer promoting dog-friendly spaces in Berkeley"
+                width={600}
+                height={800}
+                priority={false}
+                loading="lazy"
+                style={{ width: 'auto', height: 'auto' }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             
             <div className="flyer-actions">
@@ -56,10 +67,10 @@ export default function Home() {
               </div>
               
               <div className="flyer-download">
-                <a href="/flyer.png" download className="btn btn-primary btn-large">
-                  📄 Download Flyer
+                <a href="/downloads" className="btn btn-primary btn-large">
+                  📄 Download Resources
                 </a>
-                <p className="note">Right-click and "Save As" to download the image</p>
+                <p className="note">Get high-res flyer and other materials</p>
               </div>
             </div>
           </div>
@@ -135,6 +146,12 @@ export default function Home() {
             <p>Join our forum to connect with fellow Berkeley dog owners, discuss local issues, and coordinate community advocacy efforts. Together, we're stronger.</p>
             <a href="https://forum.berkeleydogs.com" className="btn btn-primary btn-large">Join the conversation</a>
           </div>
+        </div>
+      </section>
+      
+      <section className="section">
+        <div className="container" style={{textAlign:'center'}}>
+          <a href="/places" className="btn btn-primary btn-large">Dog-friendly places map</a>
         </div>
       </section>
     </main>
