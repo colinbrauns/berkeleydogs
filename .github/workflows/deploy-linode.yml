@@ -102,11 +102,21 @@ jobs:
 
           echo "Checking app health inside the container on /guide"
 
-          if ! $DOCKER compose -f docker-compose.prod.yml exec -T berkeleydogs wget -qO- "http://127.0.0.1:3000/guide" >/dev/null; then
-            echo "Local app health check failed. Recent container logs:"
-            $DOCKER compose -f docker-compose.prod.yml logs --tail=120 berkeleydogs
-            exit 1
-          fi
+          for attempt in $(seq 1 30); do
+            if $DOCKER compose -f docker-compose.prod.yml exec -T berkeleydogs wget -qO- "http://127.0.0.1:3000/guide" >/dev/null; then
+              echo "Local app health check passed."
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 30 ]; then
+              echo "Local app health check failed after ${attempt} attempts. Recent container logs:"
+              $DOCKER compose -f docker-compose.prod.yml logs --tail=120 berkeleydogs
+              exit 1
+            fi
+
+            echo "App is not ready yet; retrying in 2 seconds (${attempt}/30)."
+            sleep 2
+          done
           REMOTE_SCRIPT
 
           $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "bash -s -- '$REMOTE_TARGET'" < /tmp/berkeleydogs-deploy.sh
