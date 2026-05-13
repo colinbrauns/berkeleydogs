@@ -114,8 +114,9 @@ jobs:
             sudo -n nginx -t
             if ! sudo -n systemctl reload nginx; then
               if ! sudo -n systemctl restart nginx; then
-                sudo -n systemctl status nginx --no-pager || true
-                sudo -n journalctl -xeu nginx.service --no-pager -n 80 || true
+                systemctl status nginx --no-pager || true
+                journalctl -u nginx.service --no-pager -n 80 || true
+                ss -ltnp '( sport = :80 or sport = :443 )' || true
                 exit 1
               fi
             fi
