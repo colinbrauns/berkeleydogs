@@ -1,78 +1,67 @@
 # berkeleydogs.com
 
-Static site for Berkeley Dog Park Advocates.
+Next.js site for Berkeley Dogs, deployed on Linode behind NGINX.
+
+## Current stack
+
+- Next.js App Router
+- Docker for the production app process
+- NGINX on Linode as the public reverse proxy
+- GitHub Actions for deploys from `main`
+
+The canonical app lives in `app/`, `data/`, and `public/`. Older root-level static files are still in the repo for reference, but new site work should happen in the Next.js app.
 
 ## Local development
 
-- Open `index.html` directly in your browser, or serve the folder:
+```bash
+npm install
+npm run dev
+```
+
+Then visit `http://localhost:3000`.
+
+Before shipping changes:
 
 ```bash
-python -m http.server 5500 # then visit http://localhost:5500
-```
-- If your files are inside a subfolder, `cd` into it first.
-
-## Replace placeholders
-
-- Update petition, calendar, and download links in `index.html`:
-  - `[LINK_TO_YOUR_ONLINE_PETITION_HERE]`
-  - `[LINK_TO_YOUR_GOOGLE_CALENDAR_HERE]`
-  - `[LINK_TO_YOUR_TALKING_POINTS_PDF]`
-  - `[LINK_TO_YOUR_PROPOSED_SOLUTIONS_BRIEF_PDF]`
-  - Social links: `[YOUR_FACEBOOK_PAGE_LINK]`, `[YOUR_INSTAGRAM_PAGE_LINK]`, `[YOUR_TWITTER_PAGE_LINK]`
-- Replace contact email in the Contact section.
-
-## Images
-
-- Hero uses `images/hero-dog-park.jpg`. Swap with your preferred 1500x800+ image; keep filename or update CSS `.hero` background URL.
-
-## Accessibility & SEO
-
-- Includes skip link, visible focus styles, ARIA current states, reduced motion support, and meta tags for social previews.
-
-## Deployment
-
-- Hosted via GitHub Pages. Ensure `CNAME` is `berkeleydogs.com`.
-- Commit changes and push to `main`. In repository settings enable Pages for the root.
-
-### CI/CD to Linode (GitHub Actions)
-
-This repo includes `.github/workflows/deploy.yml` to sync the repo to a Linode server on every push to `main` using rsync over SSH.
-
-1) On Linode
-- Create a non-root user (e.g., `deploy`) and ensure SSH access.
-- Create the target dir (e.g., `/var/www/berkeleydogs.com`) and configure your web server (nginx) to serve that directory.
-
-2) In GitHub repo Settings → Secrets and variables → Actions, add:
-- `SSH_PRIVATE_KEY`: Private key matching the public key added to the Linode user's `~/.ssh/authorized_keys`.
-- `REMOTE_HOST`: Your Linode IP or hostname.
-- `REMOTE_USER`: The SSH username (e.g., `deploy`).
-- `REMOTE_PORT`: SSH port (usually `22`).
-- `REMOTE_TARGET`: Absolute path to deploy to (e.g., `/var/www/berkeleydogs.com`).
-
-3) Push to `main` and the workflow will rsync files to the server and optionally reload nginx.
-
-### Auto-sync from local to GitHub
-
-For automatic local push (Windows PowerShell 7), you can run a simple background loop during active development:
-
-```powershell
-while ($true) {
-  git add -A
-  if (-not [string]::IsNullOrWhiteSpace((git status --porcelain))) {
-    git commit -m "auto: save"
-    git push origin main
-  }
-  Start-Sleep -Seconds 30
-}
+npm run build
+npm audit --audit-level=moderate
 ```
 
-Stop the loop with Ctrl+C when done.
+## Production deployment
 
-## Community forum (Discourse)
+Pushing to `main` runs `.github/workflows/deploy-linode.yml`.
 
-- This site links to and can embed a Discourse forum.
-- Steps:
-  1. Provision a Discourse instance (e.g., on a small VPS or using Discourse hosting). Set base URL, e.g., `https://forum.berkeleydogs.com`.
-  2. Configure CORS/embedding: in Discourse admin, add `https://berkeleydogs.com` as an allowed embed origin.
-  3. In `index.html`, ensure the Forum button points to your forum URL and the embed script `discourseUrl` matches it.
-  4. Optionally map DNS: create CNAME `forum.berkeleydogs.com` to your Discourse host.
+The workflow:
+
+1. Installs dependencies with `npm ci`.
+2. Builds the Next.js app.
+3. Rsyncs the repository to Linode.
+4. Runs `docker compose -f docker-compose.prod.yml up -d --build --remove-orphans` on the server.
+
+Required GitHub Actions secrets:
+
+- `SSH_PRIVATE_KEY`: private deploy key accepted by the Linode deploy user
+- `REMOTE_HOST`: Linode IP address or hostname
+- `REMOTE_USER`: SSH user, usually `deploy`
+- `REMOTE_PORT`: SSH port, defaults to `2222` if omitted
+- `REMOTE_TARGET`: deploy directory, defaults to `/var/www/berkeleydogs.com` if omitted
+
+## Linode server expectations
+
+The Linode host should have:
+
+- Docker and Docker Compose installed
+- A deploy user that can write to `/var/www/berkeleydogs.com`
+- That deploy user added to the `docker` group, or otherwise able to run `docker compose`
+- NGINX proxying `berkeleydogs.com` to the app container on `127.0.0.1:3000`
+
+Example NGINX config: `deploy/nginx.berkeleydogs.com.conf`.
+
+If another app already uses host port `3000`, set `APP_PORT` on the server and update the NGINX proxy target to match. `docker-compose.prod.yml` maps `${APP_PORT:-3000}:3000`.
+
+## Content to finish
+
+- Keep the Berkeley Dog Guide listings current in `data/guideListings.js`.
+- Add real PDFs for `/flyer.pdf`, `/talking-points.pdf`, and `/solutions-brief.pdf`, or remove those download buttons until the files exist.
+- Decide whether the legacy static files should be deleted after confirming NGINX serves the Next.js container.
+- Add analytics once there is a clear success metric, such as forum joins, flyer downloads, or volunteer emails.

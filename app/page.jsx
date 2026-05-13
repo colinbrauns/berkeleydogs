@@ -30,6 +30,19 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section guide-promo-section">
+        <div className="container">
+          <div className="guide-promo">
+            <div>
+              <span className="badge">New community utility</span>
+              <h2>Find dog parks, care, and local resources</h2>
+              <p>Use the Berkeley Dog Guide to search vets, groomers, trainers, parks, pet stores, emergency care, and places the community wants to keep current.</p>
+            </div>
+            <a href="/guide" className="btn btn-primary btn-large">Open the guide</a>
+          </div>
+        </div>
+      </section>
+
       <section className="section flyer-section">
         <div className="container">
           <h2>Share Our Flyer</h2>
@@ -151,7 +164,7 @@ export default function Home() {
       
       <section className="section">
         <div className="container" style={{textAlign:'center'}}>
-          <a href="/places" className="btn btn-primary btn-large">Dog-friendly places map</a>
+          <a href="/guide" className="btn btn-primary btn-large">Berkeley Dog Guide</a>
         </div>
       </section>
     </main>

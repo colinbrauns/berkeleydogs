@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default function PlacesPage() {
+export default function MapPage() {
   redirect('/guide');
 }

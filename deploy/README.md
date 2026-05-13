@@ -1,133 +1,73 @@
-# Linode Multi-Site Deployment Setup
+# Linode Deployment Notes
 
-This directory contains scripts to configure your **existing multi-site** Linode server for GitHub Actions deployment of berkeleydogs.com.
+This site is intended to run as a Dockerized Next.js app behind the existing Linode NGINX server.
 
-## 🌐 Multi-Site Setup (Recommended for existing servers)
+## Server setup
 
-### 1. Run Multi-Site Setup (as root)
+Install Docker and make sure the deploy user can run it:
+
 ```bash
-# For servers already hosting multiple websites
-wget https://raw.githubusercontent.com/colinbrauns/berkeleydogs/main/deploy/multi-site-setup.sh
-chmod +x multi-site-setup.sh
-./multi-site-setup.sh
+sudo apt update
+sudo apt install -y docker.io docker-compose-plugin
+sudo usermod -aG docker deploy
 ```
 
-## 🆕 Fresh Server Setup (if starting from scratch)
+The deploy user may need to log out and back in before group membership takes effect.
 
-### 1. Run Full Security Setup (as root)
+Create the app directory:
+
 ```bash
-# Only for new/fresh servers - includes full security hardening
-wget https://raw.githubusercontent.com/colinbrauns/berkeleydogs/main/deploy/linode-security-setup.sh
-chmod +x linode-security-setup.sh
-./linode-security-setup.sh
+sudo mkdir -p /var/www/berkeleydogs.com
+sudo chown deploy:deploy /var/www/berkeleydogs.com
 ```
 
-### 2. Setup SSH Keys (as deploy user)
+## NGINX
+
+Copy `deploy/nginx.berkeleydogs.com.conf` to:
+
 ```bash
-# Upload and run the SSH key setup
-scp setup-ssh-keys.sh deploy@YOUR_LINODE_IP:/tmp/
-ssh -p 2222 deploy@YOUR_LINODE_IP "chmod +x /tmp/setup-ssh-keys.sh && /tmp/setup-ssh-keys.sh"
+/etc/nginx/sites-available/berkeleydogs.com
 ```
 
-### 3. Configure GitHub Secrets
-Go to your GitHub repository → Settings → Secrets and variables → Actions
+Enable and reload:
 
-Add these secrets with the values from the SSH key setup script:
-- `SSH_PRIVATE_KEY`: The private key content
-- `REMOTE_HOST`: Your Linode IP address  
-- `REMOTE_USER`: `deploy`
-- `REMOTE_PORT`: `2222`
-- `REMOTE_TARGET`: `/var/www/berkeleydogs.com`
-
-### 4. Setup SSL Certificate
 ```bash
-ssh -p 2222 deploy@YOUR_LINODE_IP
+sudo ln -sf /etc/nginx/sites-available/berkeleydogs.com /etc/nginx/sites-enabled/berkeleydogs.com
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Then add or renew TLS with Certbot:
+
+```bash
 sudo certbot --nginx -d berkeleydogs.com -d www.berkeleydogs.com
 ```
 
-### 5. Test Deployment
-Run locally:
+## GitHub Actions secrets
+
+Add these in GitHub repository settings:
+
+- `SSH_PRIVATE_KEY`
+- `REMOTE_HOST`
+- `REMOTE_USER`
+- `REMOTE_PORT`
+- `REMOTE_TARGET`
+
+`REMOTE_USER`, `REMOTE_PORT`, and `REMOTE_TARGET` can be omitted if the server uses `deploy`, port `2222`, and `/var/www/berkeleydogs.com`.
+
+## Manual deploy fallback
+
+From the server:
+
 ```bash
-chmod +x test-deployment.sh
-./test-deployment.sh YOUR_LINODE_IP
+cd /var/www/berkeleydogs.com
+docker compose -f docker-compose.prod.yml up -d --build --remove-orphans
 ```
 
-## Security Features Implemented
+Useful checks:
 
-✅ **SSH Hardening**
-- Changed port to 2222
-- Disabled root login
-- Key-only authentication
-- Limited login attempts
-
-✅ **Firewall Protection**
-- UFW configured with minimal open ports
-- fail2ban for intrusion prevention
-- Rate limiting on nginx
-
-✅ **Web Server Security**
-- Security headers configured
-- Hidden nginx version
-- Protection against common attacks
-- SSL/TLS with automatic renewal
-
-✅ **System Hardening**
-- Automatic security updates
-- Minimal user privileges
-- Secure file permissions
-
-## Troubleshooting
-
-### SSH Connection Issues
-- Ensure port 2222 is open in Linode's firewall
-- Verify SSH keys are correctly configured
-- Check UFW status: `sudo ufw status`
-
-### Deployment Failures
-- Check GitHub Actions logs
-- Verify all secrets are set correctly
-- Test SSH connection manually
-- Ensure target directory permissions are correct
-
-### Website Not Loading
-- Check nginx status: `sudo systemctl status nginx`
-- Verify DNS settings point to your Linode IP
-- Check SSL certificate: `sudo certbot certificates`
-- Review nginx error logs: `sudo tail -f /var/log/nginx/error.log`
-
-## Maintenance
-
-### Regular Updates
 ```bash
-# System updates (automatic via unattended-upgrades)
-sudo apt update && sudo apt upgrade
-
-# SSL certificate renewal (automatic via certbot)
-sudo certbot renew --dry-run
+docker compose -f docker-compose.prod.yml ps
+docker compose -f docker-compose.prod.yml logs --tail=100 berkeleydogs
+curl -I http://127.0.0.1:3000
 ```
-
-### Security Monitoring
-```bash
-# Check fail2ban status
-sudo fail2ban-client status sshd
-
-# Review recent login attempts
-sudo tail -f /var/log/auth.log
-
-# Check UFW logs
-sudo tail -f /var/log/ufw.log
-```
-
-### Backup Important Files
-- SSH keys (`~/.ssh/`)
-- Nginx configurations (`/etc/nginx/`)
-- SSL certificates (`/etc/letsencrypt/`)
-- Website files (`/var/www/berkeleydogs.com/`)
-
-## Support
-
-If you encounter issues:
-1. Check the troubleshooting section above
-2. Review GitHub Actions logs
-3. Check Linode server logs
-4. Verify DNS and firewall settings

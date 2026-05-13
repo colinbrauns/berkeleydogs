@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <header className="header">
-          <div className="brand">
+          <a href="/" className="brand" aria-label="Berkeley Dogs home">
             <Image 
               src="/berkdogslogo_curry.png" 
               alt="Berkeley Dogs" 
@@ -24,17 +24,21 @@ export default function RootLayout({ children }) {
               className="brand-logo"
               style={{ height: '48px', width: 'auto' }}
             />
-          </div>
-          <nav className="nav">
-            <a href="https://forum.berkeleydogs.com" className="btn btn-primary">Join the forum</a>
+            <span>Berkeley Dogs</span>
+          </a>
+          <nav className="nav" aria-label="Primary">
+            <a href="/guide" className="nav-link">Guide</a>
+            <a href="/calendar" className="nav-link">Calendar</a>
+            <a href="/downloads" className="nav-link">Downloads</a>
+            <a href="https://forum.berkeleydogs.com" className="btn btn-primary">Forum</a>
           </nav>
         </header>
         {children}
         <footer className="footer">
           <div className="container">
             <div className="footer-nav">
+              <a href="/guide" className="footer-link">Berkeley Dog Guide</a>
               <a href="/calendar" className="footer-link">Events Calendar</a>
-              <a href="/places" className="footer-link">Dog-friendly places map</a>
               <a href="/downloads" className="footer-link">Downloads</a>
               <a href="https://forum.berkeleydogs.com" className="footer-link">Community Forum</a>
             </div>

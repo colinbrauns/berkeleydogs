@@ -1,0 +1,85 @@
+name: Deploy to Linode
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: berkeleydogs-linode-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    env:
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      REMOTE_USER: ${{ secrets.REMOTE_USER }}
+      REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+      REMOTE_TARGET: ${{ secrets.REMOTE_TARGET }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          : "${REMOTE_HOST:?REMOTE_HOST secret is required}"
+          : "${SSH_PRIVATE_KEY:?SSH_PRIVATE_KEY secret is required}"
+
+          REMOTE_PORT="${REMOTE_PORT:-2222}"
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/linode_deploy_key
+          chmod 600 ~/.ssh/linode_deploy_key
+          ssh-keyscan -p "$REMOTE_PORT" "$REMOTE_HOST" >> ~/.ssh/known_hosts
+
+      - name: Sync files to Linode
+        run: |
+          set -euo pipefail
+          REMOTE_USER="${REMOTE_USER:-deploy}"
+          REMOTE_PORT="${REMOTE_PORT:-2222}"
+          REMOTE_TARGET="${REMOTE_TARGET:-/var/www/berkeleydogs.com}"
+          SSH_CMD="ssh -i ~/.ssh/linode_deploy_key -p ${REMOTE_PORT}"
+
+          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "mkdir -p '$REMOTE_TARGET'"
+
+          rsync -az --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.next/' \
+            --exclude='node_modules/' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='*.log' \
+            -e "$SSH_CMD" \
+            ./ "$REMOTE_USER@$REMOTE_HOST:$REMOTE_TARGET/"
+
+      - name: Rebuild and restart container
+        run: |
+          set -euo pipefail
+          REMOTE_USER="${REMOTE_USER:-deploy}"
+          REMOTE_PORT="${REMOTE_PORT:-2222}"
+          REMOTE_TARGET="${REMOTE_TARGET:-/var/www/berkeleydogs.com}"
+          SSH_CMD="ssh -i ~/.ssh/linode_deploy_key -p ${REMOTE_PORT}"
+
+          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "cd '$REMOTE_TARGET' && docker compose -f docker-compose.prod.yml up -d --build --remove-orphans && docker image prune -f"
