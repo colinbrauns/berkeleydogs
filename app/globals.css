@@ -78,8 +78,8 @@ a:hover{text-decoration:underline}
 .guide-reset{margin-left:auto;color:var(--muted)}
 .guide-results-meta{color:var(--muted);font-size:14px}
 .guide-results-meta strong{color:var(--california-gold)}
-.guide-content{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:24px;align-items:start}
-.guide-list{display:grid;gap:14px}
+.guide-content{display:grid;grid-template-columns:minmax(320px,.78fr) minmax(520px,1.22fr);grid-template-areas:"list map";gap:24px;align-items:start}
+.guide-list{grid-area:list;display:grid;gap:14px}
 .guide-card{border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.08);box-shadow:0 4px 16px rgba(0,0,0,.18);overflow:hidden;transition:border-color .18s ease,transform .18s ease,background .18s ease}
 .guide-card:hover,.guide-card.is-selected{border-color:rgba(253,181,21,.7);background:rgba(255,255,255,.12)}
 .guide-card.is-selected{box-shadow:0 0 0 2px rgba(253,181,21,.2),0 8px 24px rgba(0,0,0,.24)}
@@ -93,13 +93,41 @@ a:hover{text-decoration:underline}
 .guide-card-actions{display:flex;flex-wrap:wrap;gap:10px;padding:14px 18px;border-top:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.12)}
 .guide-card-actions a{color:var(--california-gold);font-size:14px;font-weight:900}
 .guide-card-actions a:hover{text-decoration:none;color:var(--white)}
-.guide-map-panel{position:sticky;top:104px;display:grid;gap:14px}
-.guide-map{position:relative;min-height:340px;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.3);background:#061439}
-.guide-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.guide-map-label{position:absolute;top:12px;left:12px;z-index:1;padding:7px 10px;border-radius:999px;background:rgba(0,38,118,.82);border:1px solid rgba(255,255,255,.24);color:var(--white);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
-.guide-selected{padding:20px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.08);box-shadow:0 6px 20px rgba(0,0,0,.18)}
-.guide-selected h3{margin:6px 0 8px;color:var(--california-gold);font-size:22px}
-.guide-selected p{margin:0 0 12px;color:var(--muted)}
+.guide-map-panel{grid-area:map;position:sticky;top:104px;outline:none;scroll-margin-top:120px}
+.guide-map{position:relative;min-height:clamp(520px,66vh,720px);border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.3);background:#102a55;isolation:isolate}
+.guide-map-art{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(circle at 74% 24%, rgba(253,181,21,.2), transparent 0 9%, transparent 17%),
+  radial-gradient(circle at 36% 68%, rgba(83,142,102,.28), transparent 0 12%, transparent 22%),
+  linear-gradient(135deg,#173f75,#08265d)}
+.guide-map-art::before{content:"";position:absolute;left:-14%;top:-10%;bottom:-10%;width:38%;border-radius:0 58% 42% 0;background:linear-gradient(160deg,#0f6c8f,#0b456c);box-shadow:inset -14px 0 30px rgba(255,255,255,.08)}
+.guide-map-art::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px),
+  linear-gradient(0deg,rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:72px 72px,72px 72px;
+  mask-image:linear-gradient(90deg,transparent 0 22%,#000 32% 100%);
+  opacity:.42}
+.guide-map-water,.guide-map-park,.guide-map-road{position:absolute;display:block}
+.guide-map-water{left:-8%;top:8%;width:32%;height:88%;border-radius:48% 52% 42% 58%;background:linear-gradient(180deg,rgba(29,139,178,.82),rgba(7,74,116,.86));box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.guide-map-park{border-radius:999px;background:rgba(111,176,126,.35);box-shadow:0 0 0 1px rgba(171,220,165,.22)}
+.guide-map-park-north{right:12%;top:12%;width:25%;height:18%;transform:rotate(-18deg)}
+.guide-map-park-south{left:38%;bottom:12%;width:26%;height:15%;transform:rotate(14deg)}
+.guide-map-road{height:5px;border-radius:999px;background:rgba(253,181,21,.72);box-shadow:0 0 0 1px rgba(0,38,118,.22)}
+.guide-map-road-main{left:24%;right:6%;top:48%;transform:rotate(-18deg)}
+.guide-map-road-cross{left:36%;right:22%;top:34%;transform:rotate(32deg)}
+.guide-map-label{position:absolute;top:12px;left:12px;z-index:4;padding:7px 10px;border-radius:999px;background:rgba(0,38,118,.82);border:1px solid rgba(255,255,255,.24);color:var(--white);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.guide-map-pins{position:absolute;inset:0;z-index:3}
+.guide-map-pin{position:absolute;left:var(--pin-x);top:var(--pin-y);width:22px;height:22px;border-radius:999px;border:2px solid var(--white);background:var(--california-gold);box-shadow:0 4px 14px rgba(0,0,0,.42);cursor:pointer;transform:translate(-50%,-50%);transition:transform .16s ease,box-shadow .16s ease,background .16s ease}
+.guide-map-pin::after{content:"";position:absolute;left:50%;top:14px;width:9px;height:9px;background:inherit;border-right:2px solid var(--white);border-bottom:2px solid var(--white);transform:translateX(-50%) rotate(45deg);border-radius:0 0 2px 0}
+.guide-map-pin:hover,.guide-map-pin.is-selected{transform:translate(-50%,-50%) scale(1.2);box-shadow:0 0 0 8px rgba(253,181,21,.2),0 8px 18px rgba(0,0,0,.45)}
+.guide-map-pin.is-selected{background:var(--white);border-color:var(--california-gold)}
+.guide-pin-label{position:absolute;left:50%;bottom:calc(100% + 12px);width:max-content;max-width:210px;padding:7px 9px;border-radius:8px;background:rgba(0,38,118,.94);border:1px solid rgba(255,255,255,.2);color:var(--white);font-size:12px;font-weight:900;line-height:1.2;box-shadow:0 6px 18px rgba(0,0,0,.3);opacity:0;pointer-events:none;transform:translateX(-50%) translateY(4px);transition:opacity .16s ease,transform .16s ease}
+.guide-map-pin:focus-visible{outline:3px solid rgba(255,255,255,.72);outline-offset:4px}
+.guide-map-pin:hover .guide-pin-label,.guide-map-pin:focus-visible .guide-pin-label{opacity:1;transform:translateX(-50%) translateY(0)}
+.guide-map-empty{position:absolute;left:50%;top:50%;z-index:3;transform:translate(-50%,-50%);padding:12px 14px;border-radius:12px;background:rgba(0,38,118,.88);border:1px solid rgba(255,255,255,.24);color:var(--white);font-weight:900}
+.guide-map-focus{position:absolute;right:14px;top:14px;z-index:4;max-width:min(380px,calc(100% - 28px));padding:18px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(0,38,118,.92);box-shadow:0 10px 28px rgba(0,0,0,.32);backdrop-filter:blur(12px)}
+.guide-map-focus h3{margin:6px 0 8px;color:var(--california-gold);font-size:22px;line-height:1.15}
+.guide-map-focus p{margin:0 0 12px;color:rgba(255,255,255,.84)}
+.guide-map-focus .btn{padding:10px 16px}
 .guide-empty{padding:28px;border:1px solid rgba(253,181,21,.32);border-radius:14px;background:rgba(253,181,21,.08);text-align:center}
 .guide-empty h3{margin:0 0 8px;color:var(--california-gold)}
 .guide-empty p{margin:0 auto 20px;color:var(--muted);max-width:460px}
@@ -201,9 +229,9 @@ a:hover{text-decoration:underline}
   .nav a{padding:10px 12px}
   .nav .btn{padding:10px 12px}
   .guide-promo{align-items:flex-start;flex-direction:column}
-  .guide-content{grid-template-columns:1fr}
-  .guide-map-panel{position:static}
-  .guide-map{min-height:320px}
+  .guide-content{grid-template-columns:1fr;grid-template-areas:"map" "list"}
+  .guide-map-panel{position:static;scroll-margin-top:178px}
+  .guide-map{min-height:430px}
 }
 
 @media (max-width:560px) {
@@ -215,6 +243,9 @@ a:hover{text-decoration:underline}
   .guide-reset{margin-left:0}
   .guide-card-title{font-size:18px}
   .guide-card-actions a{font-size:13px}
+  .guide-map{min-height:380px}
+  .guide-map-focus{left:10px;right:10px;top:auto;bottom:10px;max-width:none;padding:14px}
+  .guide-map-focus h3{font-size:18px}
 }
 
 /* Performance optimizations */
