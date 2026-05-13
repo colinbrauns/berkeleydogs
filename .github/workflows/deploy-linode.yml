@@ -109,6 +109,16 @@ jobs:
             $DOCKER compose -f docker-compose.prod.yml logs --tail=120 berkeleydogs
             exit 1
           fi
+
+          if command -v nginx >/dev/null 2>&1; then
+            sudo -n nginx -t
+            sudo -n systemctl reload nginx || sudo -n systemctl restart nginx
+          fi
           REMOTE_SCRIPT
 
           $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "bash -s -- '$REMOTE_TARGET'" < /tmp/berkeleydogs-deploy.sh
+
+      - name: Verify public site
+        run: |
+          set -euo pipefail
+          curl -fsSI --retry 5 --retry-delay 3 https://berkeleydogs.com/guide
