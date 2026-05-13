@@ -85,4 +85,30 @@ jobs:
           REMOTE_TARGET="${REMOTE_TARGET:-/var/www/berkeleydogs.com}"
           SSH_CMD="ssh -i ~/.ssh/linode_deploy_key -p ${REMOTE_PORT}"
 
-          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "cd '$REMOTE_TARGET' && if docker info >/dev/null 2>&1; then DOCKER='docker'; else DOCKER='sudo -n docker'; fi && \$DOCKER compose -f docker-compose.prod.yml up -d --build --remove-orphans && \$DOCKER image prune -f"
+          cat > /tmp/berkeleydogs-deploy.sh <<'REMOTE_SCRIPT'
+          set -euo pipefail
+
+          cd "$1"
+
+          if docker info >/dev/null 2>&1; then
+            DOCKER="docker"
+          else
+            DOCKER="sudo -n docker"
+          fi
+
+          $DOCKER compose -f docker-compose.prod.yml up -d --build --remove-orphans
+          $DOCKER image prune -f
+          $DOCKER compose -f docker-compose.prod.yml ps
+
+          HOST_PORT="$($DOCKER compose -f docker-compose.prod.yml port berkeleydogs 3000 | awk -F: 'END {print $NF}')"
+          HOST_PORT="${HOST_PORT:-3000}"
+          echo "Checking local app health on 127.0.0.1:${HOST_PORT}/guide"
+
+          if ! curl -fsS "http://127.0.0.1:${HOST_PORT}/guide" >/dev/null; then
+            echo "Local app health check failed. Recent container logs:"
+            $DOCKER compose -f docker-compose.prod.yml logs --tail=120 berkeleydogs
+            exit 1
+          fi
+          REMOTE_SCRIPT
+
+          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "bash -s -- '$REMOTE_TARGET'" < /tmp/berkeleydogs-deploy.sh
