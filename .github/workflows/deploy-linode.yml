@@ -100,26 +100,12 @@ jobs:
           $DOCKER image prune -f
           $DOCKER compose -f docker-compose.prod.yml ps
 
-          HOST_PORT="$($DOCKER compose -f docker-compose.prod.yml port berkeleydogs 3000 | awk -F: 'END {print $NF}')"
-          HOST_PORT="${HOST_PORT:-3000}"
-          echo "Checking local app health on 127.0.0.1:${HOST_PORT}/guide"
+          echo "Checking app health inside the container on /guide"
 
-          if ! curl -fsS "http://127.0.0.1:${HOST_PORT}/guide" >/dev/null; then
+          if ! $DOCKER compose -f docker-compose.prod.yml exec -T berkeleydogs wget -qO- "http://127.0.0.1:3000/guide" >/dev/null; then
             echo "Local app health check failed. Recent container logs:"
             $DOCKER compose -f docker-compose.prod.yml logs --tail=120 berkeleydogs
             exit 1
-          fi
-
-          if command -v nginx >/dev/null 2>&1; then
-            sudo -n nginx -t
-            if ! sudo -n systemctl reload nginx; then
-              if ! sudo -n systemctl restart nginx; then
-                systemctl status nginx --no-pager || true
-                journalctl -u nginx.service --no-pager -n 80 || true
-                ss -ltnp '( sport = :80 or sport = :443 )' || true
-                exit 1
-              fi
-            fi
           fi
           REMOTE_SCRIPT
 

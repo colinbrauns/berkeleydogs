@@ -1,6 +1,6 @@
 # Linode Deployment Notes
 
-This site is intended to run as a Dockerized Next.js app behind the existing Linode NGINX server.
+This site runs as a Dockerized Next.js app behind the existing Linode Nginx Proxy Manager container.
 
 ## Server setup
 
@@ -21,27 +21,24 @@ sudo mkdir -p /var/www/berkeleydogs.com
 sudo chown deploy:deploy /var/www/berkeleydogs.com
 ```
 
-## NGINX
+## Nginx Proxy Manager
 
-Copy `deploy/nginx.berkeleydogs.com.conf` to:
-
-```bash
-/etc/nginx/sites-available/berkeleydogs.com
-```
-
-Enable and reload:
+The app container joins the existing Docker networks used by the proxy manager:
 
 ```bash
-sudo ln -sf /etc/nginx/sites-available/berkeleydogs.com /etc/nginx/sites-enabled/berkeleydogs.com
-sudo nginx -t
-sudo systemctl reload nginx
+proxy
+infra_default
 ```
 
-Then add or renew TLS with Certbot:
+In Nginx Proxy Manager, configure the Proxy Host for `berkeleydogs.com` and `www.berkeleydogs.com` to:
 
-```bash
-sudo certbot --nginx -d berkeleydogs.com -d www.berkeleydogs.com
-```
+- Scheme: `http`
+- Forward Hostname / IP: `app-berkeleydogs`
+- Forward Port: `3000`
+
+Do not run the system `nginx.service` on this server while Nginx Proxy Manager owns public ports `80` and `443`.
+
+If the public site returns `502` while `app-berkeleydogs` is healthy, check that the Proxy Host target above is attached to the same Docker network as `infra-nginx-proxy-manager-1`.
 
 ## GitHub Actions secrets
 
@@ -69,5 +66,5 @@ Useful checks:
 ```bash
 docker compose -f docker-compose.prod.yml ps
 docker compose -f docker-compose.prod.yml logs --tail=100 berkeleydogs
-curl -I http://127.0.0.1:3000
+docker compose -f docker-compose.prod.yml exec -T berkeleydogs wget -qO- http://127.0.0.1:3000/guide >/dev/null
 ```

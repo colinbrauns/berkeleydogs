@@ -6,7 +6,7 @@ Next.js site for Berkeley Dogs, deployed on Linode behind NGINX.
 
 - Next.js App Router
 - Docker for the production app process
-- NGINX on Linode as the public reverse proxy
+- Nginx Proxy Manager on Linode as the public reverse proxy
 - GitHub Actions for deploys from `main`
 
 The canonical app lives in `app/`, `data/`, and `public/`. Older root-level static files are still in the repo for reference, but new site work should happen in the Next.js app.
@@ -53,11 +53,9 @@ The Linode host should have:
 - Docker and Docker Compose installed
 - A deploy user that can write to `/var/www/berkeleydogs.com`
 - That deploy user added to the `docker` group, or otherwise able to run `docker compose`
-- NGINX proxying `berkeleydogs.com` to the app container on `127.0.0.1:3000`
+- Nginx Proxy Manager proxying `berkeleydogs.com` to `app-berkeleydogs:3000`
 
-Example NGINX config: `deploy/nginx.berkeleydogs.com.conf`.
-
-If another app already uses host port `3000`, set `APP_PORT` on the server and update the NGINX proxy target to match. `docker-compose.prod.yml` maps `${APP_PORT:-3000}:3000`.
+The app joins the existing external Docker networks `proxy` and `infra_default` so Nginx Proxy Manager can reach it by container name.
 
 ## Content to finish
 

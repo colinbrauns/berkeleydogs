@@ -9,8 +9,11 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - NEXT_TELEMETRY_DISABLED=1
-    ports:
-      - "${APP_PORT:-3000}:3000"
+    expose:
+      - "3000"
+    networks:
+      - proxy
+      - infra_default
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:3000/"]
       interval: 30s
@@ -18,4 +21,8 @@ services:
       retries: 3
       start_period: 20s
 
-
+networks:
+  proxy:
+    external: true
+  infra_default:
+    external: true
