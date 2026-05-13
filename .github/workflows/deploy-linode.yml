@@ -61,9 +61,12 @@ jobs:
           REMOTE_TARGET="${REMOTE_TARGET:-/var/www/berkeleydogs.com}"
           SSH_CMD="ssh -i ~/.ssh/linode_deploy_key -p ${REMOTE_PORT}"
 
-          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "mkdir -p '$REMOTE_TARGET'"
+          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "mkdir -p '$REMOTE_TARGET' && sudo chown -R '$REMOTE_USER':'$REMOTE_USER' '$REMOTE_TARGET'"
 
           rsync -az --delete \
+            --no-owner \
+            --no-group \
+            --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r \
             --exclude='.git/' \
             --exclude='.github/' \
             --exclude='.next/' \
