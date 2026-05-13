@@ -85,4 +85,4 @@ jobs:
           REMOTE_TARGET="${REMOTE_TARGET:-/var/www/berkeleydogs.com}"
           SSH_CMD="ssh -i ~/.ssh/linode_deploy_key -p ${REMOTE_PORT}"
 
-          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "cd '$REMOTE_TARGET' && docker compose -f docker-compose.prod.yml up -d --build --remove-orphans && docker image prune -f"
+          $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" "cd '$REMOTE_TARGET' && if docker info >/dev/null 2>&1; then DOCKER='docker'; else DOCKER='sudo -n docker'; fi && \$DOCKER compose -f docker-compose.prod.yml up -d --build --remove-orphans && \$DOCKER image prune -f"
