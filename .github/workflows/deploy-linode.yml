@@ -112,7 +112,13 @@ jobs:
 
           if command -v nginx >/dev/null 2>&1; then
             sudo -n nginx -t
-            sudo -n systemctl reload nginx || sudo -n systemctl restart nginx
+            if ! sudo -n systemctl reload nginx; then
+              if ! sudo -n systemctl restart nginx; then
+                sudo -n systemctl status nginx --no-pager || true
+                sudo -n journalctl -xeu nginx.service --no-pager -n 80 || true
+                exit 1
+              fi
+            fi
           fi
           REMOTE_SCRIPT
 
