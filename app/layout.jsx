@@ -1,5 +1,4 @@
 import './globals.css';
-import Image from 'next/image';
 
 export const metadata = {
   title: 'Berkeley Dogs',
@@ -15,15 +14,6 @@ export default function RootLayout({ children }) {
       <body>
         <header className="header">
           <a href="/" className="brand" aria-label="Berkeley Dogs home">
-            <Image 
-              src="/berkdogslogo_curry.png" 
-              alt="Berkeley Dogs" 
-              width={48}
-              height={48}
-              priority={true}
-              className="brand-logo"
-              style={{ height: '48px', width: 'auto' }}
-            />
             <span>Berkeley Dogs</span>
           </a>
           <nav className="nav" aria-label="Primary">

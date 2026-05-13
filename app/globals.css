@@ -18,7 +18,6 @@ a:hover{text-decoration:underline}
 .header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 32px;border-bottom:1px solid var(--border);position:sticky;top:0;backdrop-filter:blur(12px);background:rgba(0,38,118,0.95);box-shadow:0 1px 3px 0 rgba(0,0,0,0.3);z-index:10}
 .brand{display:flex;align-items:center;gap:12px;color:var(--white);font-weight:800;text-decoration:none}
 .brand:hover{text-decoration:none;color:var(--california-gold)}
-.brand-logo{height:48px;width:auto;display:inline-block;object-fit:contain}
 .nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 .nav a{margin-left:0;padding:12px 18px;border-radius:12px;transition:all 0.2s ease}
 .nav-link{color:var(--muted);font-weight:700;border:1px solid transparent}
@@ -216,7 +215,6 @@ a:hover{text-decoration:underline}
   .guide-reset{margin-left:0}
   .guide-card-title{font-size:18px}
   .guide-card-actions a{font-size:13px}
-  .brand span{display:none}
 }
 
 /* Performance optimizations */
